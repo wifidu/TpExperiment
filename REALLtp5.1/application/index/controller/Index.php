@@ -1,7 +1,9 @@
 <?php
 namespace app\index\controller;
-
-class Index
+use think\facade\Env;
+use think\facade\Config;
+use think\Controller;
+class Index extends Controller
 {
     public function index()
     {
@@ -11,5 +13,12 @@ class Index
     public function hello($name = 'ThinkPHP5')
     {
         return 'hello,' . $name;
+    }
+	public function test(){
+	    return $this->fetch();	
+	}	
+    public function home(){
+            
+        return $this->fetch();
     }
 }
