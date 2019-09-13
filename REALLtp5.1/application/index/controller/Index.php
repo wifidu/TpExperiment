@@ -15,10 +15,15 @@ class Index extends Controller
         return 'hello,' . $name;
     }
 	public function test(){
-	    return $this->fetch();	
+	    return $this->fetch();
 	}	
     public function home(){
-            
+        return $this->fetch();
+    }
+    public function login(){
+        return $this->fetch();
+    }
+    public function registration(){
         return $this->fetch();
     }
 }

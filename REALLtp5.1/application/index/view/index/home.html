@@ -4,19 +4,71 @@
 <head>
 <meta charset="utf-8">
 <title>wifiDU</title>
-<style type="text/css">
-body{
-}
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 	
-<img style="width:100%" src="__IMG__/5.jpg"> 
-<img style="width:100%" src="__IMG__/1.jpg"> 
-<img style="width:100%" src="__IMG__/2.jpg"> 
-<img style="width:100%" src="__IMG__/3.jpg"> 
-<img style="width:100%" src="__IMG__/4.jpg"> 
- 
+<!--<img style="width:100%" src="__IMG__/5.jpg"> -->
+<!--<img style="width:100%" src="__IMG__/1.jpg"> -->
+<!--<img style="width:100%" src="__IMG__/2.jpg"> -->
+<!--<img style="width:100%" src="__IMG__/3.jpg"> -->
+<!--<img style="width:100%" src="__IMG__/4.jpg"> -->
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- 指示符 -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+        <li data-target="#demo" data-slide-to="3"></li>
+        <li data-target="#demo" data-slide-to="4"></li>
+    </ul>
+    <!-- 轮播图片 -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="__IMG__/5.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="__IMG__/1.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="__IMG__/2.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="__IMG__/3.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="__IMG__/4.jpg">
+        </div>
+    </div>
+    <!-- 左右切换按钮 -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
  
 </body>
 </html>
