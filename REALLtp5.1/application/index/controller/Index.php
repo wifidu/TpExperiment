@@ -26,5 +26,5 @@ class Index extends Controller
     public function registration(){
         return $this->fetch();
     }
-    //I love you
+    //I love you......
 }
