@@ -16,7 +16,7 @@ class Index extends Controller
     }
 	public function test(){
 	    return $this->fetch();
-	}	
+	}	//ssss
     public function home(){
         return $this->fetch();
     }
