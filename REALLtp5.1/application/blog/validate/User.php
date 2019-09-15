@@ -1,0 +1,30 @@
+<?php
+
+namespace app\blog\validate;
+
+use think\Validate;
+
+class User extends Validate
+{
+    /**
+     * 定义验证规则
+     * 格式：'字段名'	=>	['规则1','规则2'...]
+     *
+     * @var array
+     */	
+	protected $rule = [
+	    'NickName|昵称' => 'require|length:5,20|chsDash|unique:user',
+	    'Email|邮箱' => 'require|email|unique:user',
+	    'PhoneNumber|手机号' => 'require|mobile|unique:user',
+	    'Password|密码' => 'require|length:6,20|confirm',
+	    'Confirm|确认密码' => 'require|length:6,20|confirm:password',
+    ];
+    
+    /**
+     * 定义错误信息
+     * 格式：'字段名.规则名'	=>	'错误信息'
+     *
+     * @var array
+     */	
+    protected $message = [];
+}

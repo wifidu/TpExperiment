@@ -15,6 +15,7 @@ class Index extends Controller
         return 'hello,' . $name;
     }
 	public function test(){
+        phpinfo();
 	    return $this->fetch();
 	}	//ssss
     public function home(){

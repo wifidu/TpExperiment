@@ -6,6 +6,8 @@ use http\Message;
 use think\Controller;
 use think\facade\Request;
 use app\blog\model\User as UserModel;
+use think\Url;
+
 class User extends Controller
 {
     public function login(){
@@ -39,17 +41,26 @@ class User extends Controller
      * @param  \think\Request  $request
      * @return \think\Response
      */
-    public function save(Request $request)
+    public function save()
     {
         if(Request::isAjax()){
             //使用模型创建数据
-            $data = Request::except('Confirm','post');
-            if(UserModel::create($data)){
-                return ['status'=>1,'message'=>"注册成功！"];
+            $data = Request::post();
+            $rule = 'app\blog\validate\User';//自定义和的验证规则
+            $res = $this->validate($data,$rule);
+            if(!$res){
+                return ['stauts'=>-1,'message'=>$res];
+            }else{//true
+                    $data = Request::except('Confirm','post');
+                    $data['RegistrationTime'] = time();
+                    $data['LastLoginTime'] = time();
+                    if(UserModel::create($data)){
+                        return ['status'=>1,'message'=>"注册成功！"];
+                    }else{
+                        return ['status'=>0,'message'=>"注册失败！"];
+                    }
+                }
             }else{
-                return ['status'=>0,'message'=>"注册失败！"];
-            }
-        }else{
             $this->error("请求类型错误",'registe');
         }
     }
