@@ -22,8 +22,8 @@
                     <input type="password" class="form-control" name="Password" id="Password" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <label for="Confirm">确认密码</label>
-                    <input type="password" class="form-control" name="Confirm" id="Confirm" placeholder="Confirm">
+                    <label for="Password_confirm">确认密码</label>
+                    <input type="password" class="form-control" name="Password_confirm" id="Password_confirm" placeholder="Confirm">
                 </div>
 <!--                <div class="form-group">-->
 <!--                    <label for="exampleInputFile">File input</label>-->
@@ -44,25 +44,28 @@
             $(function () {
                 $("#Register").on('click',function () {
                     $.ajax({
-                        async:false,
+                        // async:false,
                         type:'post',
                         url:"{:url('blog/user/save')}",
                         data:$('#regist').serialize(),
                         dataType:'json',
                         success:function (data) {
+                            // alert(data.status);
                             switch (data.status) {
                                 //我弄了一天。只因为错了一个字母。他竟然不提示我！！
+                                case -1:
+                                    $("#123").show();
+                                    $("#message").text(data.message);
+                                    break;
+                                // $(location).back();
                                 case 1:
                                     alert(data.message);
-                                    window.location.href="{:url('blog/index/index')}";
-                                    // $(location).attr('href','{:url("blog/index/index")}');
+                                    // window.location.href="{:url('blog/index/index')}";
+                                    $(location).attr('href','{:url("blog/index/index")}');
                                     break;
-                                case 0:
-                                case -1:
-                                    alert(data.message);
-                                    window.location.back();
-                                    // $(location).back();
+                                case 0: alert('注册失败') ;break;
                             }
+
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             alert(errorThrown);
@@ -81,9 +84,8 @@
                         //     errorThrown:（可选）捕获的错误对象
                     }
                     })
-
+                    return false;
                 })
-
             })
         </script>
 

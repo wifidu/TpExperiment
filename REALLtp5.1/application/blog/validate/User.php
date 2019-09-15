@@ -13,11 +13,11 @@ class User extends Validate
      * @var array
      */	
 	protected $rule = [
-	    'NickName|昵称' => 'require|length:5,20|chsDash|unique:user',
 	    'Email|邮箱' => 'require|email|unique:user',
 	    'PhoneNumber|手机号' => 'require|mobile|unique:user',
-	    'Password|密码' => 'require|length:6,20|confirm',
-	    'Confirm|确认密码' => 'require|length:6,20|confirm:password',
+        'NickName|昵称' => 'require|length:5,20|chsDash|unique:user',
+        'Password|密码' => 'require|length:6,20|confirm',
+//	    'Confirm|确认密码' => 'require|length:6,20|confirm:Password',
     ];
     
     /**

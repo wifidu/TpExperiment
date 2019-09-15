@@ -6,7 +6,9 @@ use http\Message;
 use think\Controller;
 use think\facade\Request;
 use app\blog\model\User as UserModel;
+use think\facade\Session;
 use think\Url;
+use think\facade\Validate;
 
 class User extends Controller
 {
@@ -19,9 +21,37 @@ class User extends Controller
      *
      * @return \think\Response
      */
-    public function index()
+    public function check()
     {
-        //
+        $rule = [
+            'Email' => 'require',
+            'Password' => 'require',
+        ];
+
+        $msg = [
+            'Email.require' => '亲，你忘了写邮箱了。。。',
+            'Password.require' => '亲，你忘了写密码了。。。',
+        ];
+        $validate   = Validate::make($rule,$msg);
+
+        $data = Request::post();
+        $result = $validate->check($data);
+
+        if(!$result) {
+            return ['status' => -1,'message'=>$validate->getError()];
+        }else{
+            $model = new UserModel();
+            $personal = $model->where('Email',$data['Email'])->find();
+            if(!$personal){
+                return ['status' => -1,'message' => "邮箱不存在"];
+            }elseif($data['Password']!==$personal['Password']){
+                return ['status' => -1,'message' => "密码错误"];
+            }else{
+                Session::set('NickName',$personal['NickName']);
+                Session::set('Email',$personal['Email']);
+                return ['status' => 1,'message' => "登录成功"];
+            }
+        }
     }
 
     /**
@@ -48,16 +78,17 @@ class User extends Controller
             $data = Request::post();
             $rule = 'app\blog\validate\User';//自定义和的验证规则
             $res = $this->validate($data,$rule);
-            if(!$res){
-                return ['stauts'=>-1,'message'=>$res];
+//            dump($res);
+            if(true !== $res){
+                return ['status' => -1 ,'message'=> $res ];
             }else{//true
-                    $data = Request::except('Confirm','post');
+                    $data = Request::except('Password_confirm','post');
                     $data['RegistrationTime'] = time();
                     $data['LastLoginTime'] = time();
                     if(UserModel::create($data)){
-                        return ['status'=>1,'message'=>"注册成功！"];
+                        return ['status'=> 1 ,'message'=>"注册成功！"];
                     }else{
-                        return ['status'=>0,'message'=>"注册失败！"];
+                        return ['status'=> 0 ,'message'=>"注册失败！"];
                     }
                 }
             }else{
