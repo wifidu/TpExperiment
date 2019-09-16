@@ -8,7 +8,7 @@
     {load href="/static/bootstrap/js/bootstrap.js" /}
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" >
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -19,13 +19,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">{$SiteName|default="Home"}</a>
+				<a class="navbar-brand active" href="{:url('blog/index/index')}">{$SiteName|default="Home"}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">代码 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{:url('blog/code/index')}">代码 <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">笔记</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -46,19 +46,26 @@
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
+                {if $Think.session.NickName}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">你好</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$UserName|default="游客"} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="user">
                             <li><a href="#">我的资料</a></li>
                             <li><a href="#">修改密码</a></li>
                             <li><a href="#">添加笔记</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">退出登录</a></li>
+							<li><a href="{:url('blog/user/logout')}">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
+                {else /}
+                <div class=" text-right" style="padding-top: 10px">
+                    <a class="btn btn-default" href="{:url('blog/user/login')}">登录</a>
+                    <a class="btn btn-default" href="{:url('blog/user/regist')}">注册</a>
+                </div>
+                {/if}
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

@@ -2,19 +2,24 @@
 
 namespace app\blog\controller;
 
+use app\common\controller\Base;
 use http\Message;
-use think\Controller;
 use think\facade\Request;
 use app\blog\model\User as UserModel;
 use think\facade\Session;
 use think\Url;
 use think\facade\Validate;
 
-class User extends Controller
+class User extends Base
 {
     public function login(){
+        $this->isLgoin();//防止重复登录
         $this->assign('Title',"用户登录");
         return $this->fetch();
+    }
+    public function logout(){
+        Session::clear();
+        return $this->fetch('user/login');
     }
     /**
      * 显示资源列表
@@ -23,34 +28,34 @@ class User extends Controller
      */
     public function check()
     {
-        $rule = [
-            'Email' => 'require',
-            'Password' => 'require',
-        ];
-
-        $msg = [
-            'Email.require' => '亲，你忘了写邮箱了。。。',
-            'Password.require' => '亲，你忘了写密码了。。。',
-        ];
-        $validate   = Validate::make($rule,$msg);
-
-        $data = Request::post();
-        $result = $validate->check($data);
-
-        if(!$result) {
-            return ['status' => -1,'message'=>$validate->getError()];
-        }else{
-            $model = new UserModel();
-            $personal = $model->where('Email',$data['Email'])->find();
-            if(!$personal){
-                return ['status' => -1,'message' => "邮箱不存在"];
-            }elseif($data['Password']!==$personal['Password']){
-                return ['status' => -1,'message' => "密码错误"];
+        if(Request::isAjax()){
+            $rule = [
+                'Email' => 'require',
+                'Password' => 'require',
+            ];
+            $msg = [
+                'Email.require' => '亲，你忘了写邮箱了。。。',
+                'Password.require' => '亲，你忘了写密码了。。。',
+            ];
+            $validate = Validate::make($rule,$msg);
+            $data = Request::post();
+            $result = $validate->check($data);
+            if(!$result) {
+                return ['status' => -1,'message'=>$validate->getError()];
             }else{
-                Session::set('NickName',$personal['NickName']);
-                Session::set('Email',$personal['Email']);
-                return ['status' => 1,'message' => "登录成功"];
+                $personal = UserModel::where('Email',$data['Email'])->find();
+                if(!$personal){
+                    return ['status' => -1,'message' => "邮箱不存在"];
+                }elseif($data['Password']!==$personal['Password']){
+                    return ['status' => -1,'message' => "密码错误"];
+                }else{
+                    Session::set('NickName',$personal['NickName']);
+                    Session::set('Email',$personal['Email']);
+                    return ['status' => 1,'message' => "登录成功"];
+                }
             }
+        }else{
+            $this->error("请求类型错误",'login');
         }
     }
 
@@ -92,7 +97,7 @@ class User extends Controller
                     }
                 }
             }else{
-            $this->error("请求类型错误",'registe');
+            $this->error("请求类型错误",'regist');
         }
     }
 
