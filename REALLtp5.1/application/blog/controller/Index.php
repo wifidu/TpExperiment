@@ -8,9 +8,10 @@ use think\facade\Session;
 class Index extends Base
 {
     public function index(){
+        $auth = Session::get('user_auth');
         $this->assign([
             'Title' => '首页',
-            'UserName'=>Session::has('NickName')?Session::get('NickName'):"游客",
+            'UserName'=>$auth['nickname'],
         ]);
         return $this->fetch();
     }

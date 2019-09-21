@@ -9,8 +9,8 @@
 </head>
 <body>
 <div class="container-fluid" >
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+    <nav class="navbar navbar-inverse ">
+        <div class="container-fluid"  >
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -23,20 +23,16 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{:url('blog/code/index')}">代码 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">笔记</a></li>
+            <div class="collapse nav-pills navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav  navbar-nav ">
+                    <li ><a href="{:url('blog/code/index')}">笔记 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{:url('blog/code/blog')}">博文</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">社区 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
+                            <li><a href="https://learnku.com/thinkphp">ThinkPHP</a></li>
+                            <li><a href="https://learnku.com/php">PHP</a></li>
                             <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -46,17 +42,19 @@
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
-                {if $Think.session.NickName}
+                {if $Think.session.user_auth}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">你好</a></li>
+                    <li><a>你好</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$UserName|default="游客"} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {$UserName|default="游客"}
+                            <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="user">
-                            <li><a href="#">我的资料</a></li>
+                            <li><a href="{:url('blog/user/userData')}">我的资料</a></li>
                             <li><a href="#">修改密码</a></li>
                             <li><a href="#">添加笔记</a></li>
                             <li role="separator" class="divider"></li>
-							<li><a href="{:url('blog/user/logout')}">退出登录</a></li>
+							<li><a href="{:url('blog/user/loginOut')}">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -4,55 +4,52 @@ namespace app\blog\controller;
 
 use app\common\controller\Base;
 use http\Message;
-use think\facade\Request;
+use think\Request;
 use app\blog\model\User as UserModel;
 use think\facade\Session;
-use think\Url;
+use app\blog\validate\User as UserValidate;
 use think\facade\Validate;
 
 class User extends Base
 {
+    /**
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/21 下午2:18
+     */
     public function login(){
         $this->isLgoin();//防止重复登录
         $this->assign('Title',"用户登录");
         return $this->fetch();
     }
-    public function logout(){
+
+    /**
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/21 下午2:18
+     */
+    public function loginOut(){
         Session::clear();
         return $this->fetch('user/login');
     }
+
     /**
-     * 显示资源列表
-     *
-     * @return \think\Response
+     * 登录检测
+     * @param UserModel $user
+     * @return bool|false|string
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/21 下午1:56
      */
-    public function check()
+    public function loginCheck(Request $request, UserModel $user)
     {
-        if(Request::isAjax()){
-            $rule = [
-                'Email' => 'require',
-                'Password' => 'require',
-            ];
-            $msg = [
-                'Email.require' => '亲，你忘了写邮箱了。。。',
-                'Password.require' => '亲，你忘了写密码了。。。',
-            ];
-            $validate = Validate::make($rule,$msg);
-            $data = Request::post();
-            $result = $validate->check($data);
-            if(!$result) {
-                return ['status' => -1,'message'=>$validate->getError()];
+        if($request->isAjax()){
+            $data = $request->post();
+            $validate = new UserValidate;
+            if($data['username'] == null or $data['Password'] == null) {
+                return msg('error',500,"帐号密码不能为空");
             }else{
-                $personal = UserModel::where('Email',$data['Email'])->find();
-                if(!$personal){
-                    return ['status' => -1,'message' => "邮箱不存在"];
-                }elseif($data['Password']!==$personal['Password']){
-                    return ['status' => -1,'message' => "密码错误"];
-                }else{
-                    Session::set('NickName',$personal['NickName']);
-                    Session::set('Email',$personal['Email']);
-                    return ['status' => 1,'message' => "登录成功"];
-                }
+                $result = $user->login($data['username'],$data['Password']);
+                return $result;
             }
         }else{
             $this->error("请求类型错误",'login');
@@ -60,9 +57,10 @@ class User extends Base
     }
 
     /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
+     * 注册
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/21 下午2:18
      */
     public function regist()
     {
@@ -71,78 +69,35 @@ class User extends Base
     }
 
     /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
+     * 保存注册帐号
+     * @param Request $request
+     * @param UserModel $user
+     * @return false|string
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:Times
      */
-    public function save()
+    public function registSave(Request $request,UserModel $user)
     {
-        if(Request::isAjax()){
+        if($request->isAjax()){
             //使用模型创建数据
-            $data = Request::post();
+            $data = $request->post();
             $rule = 'app\blog\validate\User';//自定义和的验证规则
             $res = $this->validate($data,$rule);
-//            dump($res);
             if(true !== $res){
-                return ['status' => -1 ,'message'=> $res ];
+                return msg('error',-1,$res);
             }else{//true
-                    $data = Request::except('Password_confirm','post');
-                    $data['RegistrationTime'] = time();
-                    $data['LastLoginTime'] = time();
-                    if(UserModel::create($data)){
-                        return ['status'=> 1 ,'message'=>"注册成功！"];
-                    }else{
-                        return ['status'=> 0 ,'message'=>"注册失败！"];
-                    }
+                    return $user->registSave($data);
                 }
             }else{
             $this->error("请求类型错误",'regist');
         }
     }
-
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
+    public function userData(){
+        $auth = Session::get('user_auth');
+        $this->assign([
+            'Title' => '首页',
+            'UserName'=>$auth['nickname'],
+        ]);
+        return $this->fetch('userdata');
     }
 }

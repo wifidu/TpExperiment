@@ -10,11 +10,11 @@
     <div class="col-md-4 col-md-offset-4">
         <form method="post" id="mi">
             <div class="form-group">
-                <label for="Email">Email address</label>
-                <input type="email" class="form-control" name="Email" id="Email" placeholder="Email">
+                <label for="Email">帐号</label>
+                <input type="email" class="form-control" name="username" id="Email" placeholder="Email or Mobile or NickName">
             </div>
             <div class="form-group">
-                <label for="Password">Password</label>
+                <label for="Password">密码</label>
                 <input type="password" class="form-control" name="Password" id="Password" placeholder="Password">
             </div>
             <button  class="btn btn-default" id="submit">Sign In</button>
@@ -26,16 +26,16 @@
         $("#submit").on('click',function () {
             $.ajax({
                 type:'post',
-                url:"{:url('blog/user/check')}",
+                url:"{:url('blog/user/loginCheck')}",
                 data:$('#mi').serialize(),
                 dataType:'json',
                 success:function (data) {
-                    switch (data.status) {
-                        case -1:
+                    switch (data.code) {
+                        case 500:
                             $("#123").show();
                             $("#message").text(data.message);
                             break;
-                        case 1:
+                        case 200:
                             $(location).attr('href',"{:url('blog/index/index')}");
                         break;
                     }
