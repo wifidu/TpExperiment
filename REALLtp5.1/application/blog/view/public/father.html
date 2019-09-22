@@ -6,6 +6,7 @@
     {load href="/static/bootstrap/css/bootstrap.css" /}
     {load href="/static/bootstrap/js/jquery-3.4.1.min.js"/}
     {load href="/static/bootstrap/js/bootstrap.js" /}
+    {load href="/static/sweetalert/docs/assets/sweetalert/sweetalert.min.js" /}
 </head>
 <body>
 <div class="container-fluid" >
@@ -25,13 +26,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse nav-pills navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav  navbar-nav ">
-                    <li ><a href="{:url('blog/code/index')}">笔记 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="{:url('blog/code/blog')}">博文</a></li>
+                    <li ><a href="{:url('blog/blog/index')}">笔记 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{:url('blog/blog/blog')}">博文</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">社区 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="https://learnku.com/thinkphp">ThinkPHP</a></li>
-                            <li><a href="https://learnku.com/php">PHP</a></li>
+                            <li><a href="https://learnku.com/thinkphp" target="_blank">ThinkPHP</a></li>
+                            <li><a href="https://learnku.com/php" target="_blank">PHP</a></li>
                             <li><a href="#">Something else here</a></li>
                         </ul>
                     </li>

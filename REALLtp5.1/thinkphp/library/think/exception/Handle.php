@@ -160,7 +160,7 @@ class Handle
                 ],
             ];
         } else {
-            // 部署模式仅显示 Code 和 Message
+            // 部署模式仅显示 Blog 和 Message
             $data = [
                 'code'    => $this->getCode($exception),
                 'message' => $this->getMessage($exception),

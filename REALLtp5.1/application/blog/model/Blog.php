@@ -3,10 +3,10 @@
 
 namespace app\blog\model;
 
-
+use app\common;
 use think\Model;
 
-class Code extends Model {
+class Blog extends Model {
 	protected $autoWriteTimestamp = true;//开启自动时间戳
 	//定义时间戳字段名：默认为create_time 和 create_time,如果一致可省略
 	//如果想关闭某个时间戳字段，将值设置为false即可：$create_time = false
@@ -19,5 +19,14 @@ class Code extends Model {
 	protected $insert = ['create_time','status'=>1,'is_top'=>0,'is_hot'=>0];
 	//仅更新的有效
 	protected $update = ['update_time'];
+
+	public function blogSave($data){
+	    $res = $this->create($data);
+	    if(!$res){
+            return msg('error',500,'保存失败');
+        }else{
+	        return msg('success',200,'发布成功');
+        }
+    }
 
 }

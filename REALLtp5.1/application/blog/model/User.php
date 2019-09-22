@@ -4,9 +4,6 @@
 namespace app\blog\model;
 
 use app\common\Md5;
-use app\user\model\Role as RoleModel;
-use think\Db;
-use think\helper\Hash;
 use think\Model;
 
 class User extends Model {

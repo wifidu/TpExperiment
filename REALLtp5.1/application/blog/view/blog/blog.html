@@ -1,0 +1,113 @@
+{extend name="public:father" /}
+{block name="left"}{/block}
+
+{block name="main"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4 class="text-center">
+                        <span class="glyphicon glyphicon-text-size" aria-hidden="true" ></span>
+                        新建博文
+                    </h4>
+
+                    <form id="blogData">
+                        <input type="hidden" name="user_id" value="{$Think.session.user_auth.uid}">
+                        <div class="form-group">
+                            <label>标题</label><input name="title" type="text" class="form-control" placeholder="标题">
+                        </div><!-- /input-group -->
+                        <div class="form-group">
+                            <label>栏目</label>
+                            <select name="cate_id" id="" class="form-control">
+                                {volist name="cateList" id="cate"}
+                                <option value="{$cate.id}" class="form-control">{$cate.name}</option>
+                                {/volist}
+                            </select>
+                        </div><!-- /input-group -->
+                        <div class="form-group">
+                            <label>文章</label>
+                            <textarea id="sendInput" name="content" style="min-height: 200px" type="text" class="form-control" placeholder="文章内容"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>图片</label>
+                            <input type="file" name="title_img" class="form-control" placeholder="标题图片">
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success " id="sureSubmit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 发表</button>
+                            <button class="btn btn-primary " id="save"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存草稿</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<
+<script>
+    $('#save').click(function () {
+        swal({
+            title: "保存成功!",
+            // text: "You clicked the button!",
+            icon: "success",
+            button: false,
+            timer: 1500,
+        }).then(
+            function () {},
+            // handling the promise rejection
+            function (dismiss) {
+                if (dismiss === 'timer') {
+                    console.log('I was closed by the timer')
+                }
+            }
+        );
+        return false;
+    });
+    $(function () {
+        $("#sureSubmit").on('click',function () {
+            $.ajax({
+                type:'post',
+                url:"{:url('blog/blog/blogSave')}",
+                data:$('#blogData').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    switch (data.code) {
+                        case 500:
+                            $('#123').show();
+                            $('#message').text(data.message);
+                            break;
+                        case 200:
+                            swal({
+                                title: "发表成功!",
+                                // text: "You clicked the button!",
+                                icon: "success",
+                                button: false,
+                                timer: 1500,
+                            }).then(
+                                function () {
+                                    $(location).attr('href',"{:url('blog/index/index')}");
+                                },
+                                function (dismiss) {
+                                    if (dismiss === 'timer') {
+                                        console.log('I was closed by the timer')
+                                    }
+                                }
+                            );
+
+                            break;
+                    }
+                }
+            });
+            return false;
+        })
+    });
+
+    $('#sendInput').on('input', function(){
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + "px";
+    });
+
+</script>
+
+{/block}
+{block name="footer"}{/block}

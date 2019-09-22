@@ -32,7 +32,7 @@ class DbException extends Exception
         $this->code    = $code;
 
         $this->setData('Database Status', [
-            'Error Code'    => $code,
+            'Error Blog'    => $code,
             'Error Message' => $message,
             'Error SQL'     => $sql,
         ]);
