@@ -10,6 +10,11 @@ use think\facade\Request;
 use app\blog\model\Blog as BlogModel;
 
 class Blog extends Base{
+    /**
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/22 下午7:03
+     */
     public function index(){
         $this->noLogin();
         $auth = Session::get('user_auth');
@@ -19,6 +24,13 @@ class Blog extends Base{
         ]);
         return $this->fetch();
     }
+
+    /**
+     * 进入新建博客页面
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/22 下午7:03
+     */
     public function blog(){
         $auth = Session::get('user_auth');
         $cateList = Cate::all();
@@ -29,6 +41,14 @@ class Blog extends Base{
         ]);
         return $this->fetch();
     }
+
+    /**
+     * 保存blog数据
+     * @param BlogModel $blogModel
+     * @return false|string
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/22 下午7:03
+     */
     public function blogSave(BlogModel $blogModel){
         if(Request::isAjax()){
             $blogData = Request::post();
