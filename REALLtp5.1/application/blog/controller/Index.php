@@ -17,7 +17,7 @@ class Index extends Base
     public function index(){
         $auth = Session::get('user_auth');
         try {
-            $blogList = Blog::where('status', '1')->paginate(10);
+            $blogList = Blog::where('status', '1')->order('id', 'desc')->paginate(10);
         } catch (DbException $e) {
             $this->error($e->getMessage());
         }

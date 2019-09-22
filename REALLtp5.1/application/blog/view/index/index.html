@@ -14,7 +14,10 @@
                     <div class="list-group" >
                             <ul class="list-group">
                                 {volist name='blogList' id='blog'}
-                                <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item"> {$blog.title}</a>
+                                <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
+                                   <span>{$blog.title}</span>
+<!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                                </a>
                                 {/volist}
                             </ul>
                     </div>

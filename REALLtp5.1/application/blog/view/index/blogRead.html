@@ -3,10 +3,51 @@
 {/block}
 
 {block name="main"}
-
+<style>
+    span.light {
+        font-weight:bold;
+        color: #8c8c8c;
+        /*font-family:Verdana,Genva,Arial,sans-serif;*/
+    }
+    span.bold{
+        font-weight:bold;
+    }
+</style>
 <div class="container">
     <div class="row">
-        <div class="col-md-2 col-md-offset-1">
+        <div class="col-md-3">
+                <div class="panel panel-default" >
+                    <div class="row" style="padding-top: 3%;margin: 5%">
+                        <span class="bold">{$UserName}</span>
+                    </div>
+                    <HR><!--分割线-->
+                    <div class="row" style="margin: 5%">
+                        <div class="col-md-3 text-center">
+                            <span class="light">文章</span>
+                            <span class="light">10</span>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="light">粉丝</span>
+                            <span class="light">1</span>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="light">喜欢</span>
+                            <span class="light">0</span>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="light">收藏</span>
+                            <span class="light">2</span>
+                        </div>
+                    </div>
+                    <HR><!--分割线-->
+                    <div class="row text-center ">
+                        <div class=" btn-group">
+                            <button type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span> 关注</button>
+                            <button type="button" class="btn btn-default" ><span class="glyphicon glyphicon-envelope"></span> 私信</button>
+                        </div>
+                    </div>
+
+                </div>
         </div>
         <div class="col-md-8">
             <div class="panel panel-success">
