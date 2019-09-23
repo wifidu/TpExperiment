@@ -5,6 +5,7 @@ namespace app\blog\model;
 
 use app\common;
 use think\Model;
+use app\blog\model\User;
 
 class Blog extends Model {
 	protected $autoWriteTimestamp = true;//开启自动时间戳
@@ -27,6 +28,14 @@ class Blog extends Model {
         }else{
 	        return msg('success',200,'发布成功');
         }
+    }
+
+    public function blogFind($blogId){
+        $blog = $this->where('id',($blogId))->find();
+        $auth = User::where('Uid',($blog['user_id']))->find();
+        $blog['auth'] = $auth['NickName'];
+//        $bd = array_merge($auth,$blog);//后来居上???????????????/
+        return $blog;
     }
 
 }

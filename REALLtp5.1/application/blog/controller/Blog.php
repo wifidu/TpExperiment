@@ -32,6 +32,7 @@ class Blog extends Base{
      * @time:2019/9/22 下午7:03
      */
     public function blog(){
+        $this->noLogin();
         $auth = Session::get('user_auth');
         $cateList = Cate::all();
         $this->assign([

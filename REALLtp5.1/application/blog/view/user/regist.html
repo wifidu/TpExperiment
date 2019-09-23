@@ -59,9 +59,25 @@
                                     break;
                                 // $(location).back();
                                 case 1:
-                                    alert(data.message);
+                                    swal({
+                                        title: "注册成功!",
+                                        // text: "You clicked the button!",
+                                        icon: "success",
+                                        button: false,
+                                        timer: 1500,
+                                    }).then(
+                                        function () {
+                                            $(location).attr('href','{:url("blog/index/index")}');
+                                        },
+                                        // handling the promise rejection
+                                        function (dismiss) {
+                                            if (dismiss === 'timer') {
+                                                console.log('I was closed by the timer')
+                                            }
+                                        }
+                                    );
                                     // window.location.href="{:url('blog/index/index')}";
-                                    $(location).attr('href','{:url("blog/index/index")}');
+
                                     break;
                                 case 0: alert('注册失败') ;break;
                             }
@@ -83,7 +99,7 @@
                         //     textStatus：错误原
                         //     errorThrown:（可选）捕获的错误对象
                     }
-                    })
+                    });
                     return false;
                 })
             })

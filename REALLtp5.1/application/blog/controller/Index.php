@@ -5,7 +5,7 @@ use app\common\controller\Base;
 use think\exception\DbException;
 use think\facade\Request;
 use think\facade\Session;
-use app\blog\model\Blog;
+use app\blog\model\Blog ;
 
 class Index extends Base
 {
@@ -28,13 +28,15 @@ class Index extends Base
         ]);
         return $this->fetch();
     }
-    public function blogRead($blogId){
+    public function blogRead($blogId,Blog $blogModel){
         $auth = Session::get('user_auth');
-        $blogData = Blog::get($blogId);
+        $blogData = $blogModel->blogFind($blogId);
+//        dump($blogData->title);
         $this->assign([
             'Title' => $blogData->title,
             'UserName'=>$auth['nickname'],
-            'content'=>$blogData->content,
+            'Auth'=>$blogData['auth'],
+            'content'=>nl2br($blogData->content),
             'createTime'=>$blogData->create_time,
         ]);
         return $this->fetch('blogRead');
