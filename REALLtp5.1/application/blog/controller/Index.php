@@ -31,12 +31,11 @@ class Index extends Base
     public function blogRead($blogId,Blog $blogModel){
         $auth = Session::get('user_auth');
         $blogData = $blogModel->blogFind($blogId);
-//        dump($blogData->title);
         $this->assign([
             'Title' => $blogData->title,
             'UserName'=>$auth['nickname'],
             'Auth'=>$blogData['auth'],
-            'content'=>nl2br($blogData->content),
+            'content'=>$blogData->content,
             'createTime'=>$blogData->create_time,
         ]);
         return $this->fetch('blogRead');

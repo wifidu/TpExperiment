@@ -58,15 +58,22 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <p>
+                    <div id = "content2">
+                    </div>
+                    <div id = "content1"  hidden="hidden">
                         {$content}
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function() {
+        $("#content2").html($("#content1").text());
+    });
 
+</script>
 
 {/block}
 {block name="footer"}

@@ -27,12 +27,13 @@
                         </div><!-- /input-group -->
                         <div class="form-group">
                             <label>文章</label>
-                            <textarea id="sendInput" name="content" style="min-height: 200px" type="text" class="form-control" placeholder="文章内容"></textarea>
+                            <textarea id="editor" name="content" placeholder="Balabala" autofocus></textarea>
+<!--                            <textarea id="sendInput" name="content" style="min-height: 200px" type="text" class="form-control" placeholder="文章内容"></textarea>-->
                         </div>
-                        <div class="form-group">
-                            <label>图片</label>
-                            <input type="file" name="title_img" class="form-control" placeholder="标题图片">
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label>图片</label>-->
+<!--                            <input type="file" name="title_img" class="form-control" placeholder="标题图片">-->
+<!--                        </div>-->
                         <div class="text-center">
                             <button class="btn btn-success " id="sureSubmit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 发表</button>
                             <button class="btn btn-primary " id="save"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存草稿</button>
@@ -43,7 +44,12 @@
         </div>
     </div>
 </div>
-<
+<script>
+    var editor = new Simditor({
+        textarea: $('#editor')
+        //optional options
+    });
+</script>
 <script>
     $('#save').click(function () {
         swal({
