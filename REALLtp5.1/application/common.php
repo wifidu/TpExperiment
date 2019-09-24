@@ -23,9 +23,9 @@ function msg($title,$code=500,$message=''){
 //    return json_encode($msg,320);
     return $msg;
 }
-function getSource(){
-    
-}
+//function getSource(){
+//
+//}
 if(!function_exists('get_client_ip')){
     /**
      * 获取客户端IP地址

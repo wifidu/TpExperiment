@@ -4,6 +4,7 @@ namespace app\blog\controller;
 
 use app\common\controller\Base;
 use http\Message;
+use think\facade\Env;
 use think\Request;
 use app\blog\model\User as UserModel;
 use think\facade\Session;
@@ -112,10 +113,10 @@ class User extends Base
      * @time:2019/9/24 下午6:54
      */
     public function userImg(){
-//        $user = UserModel::get(Session::get('user_auth')['uid']);
+        $user = UserModel::get(Session::get('user_auth')['uid']);
         $this->assign([
             'Title' => '修改头像',
-//            'Img' => 'uploads/'.$user->UserImg,
+            'Img' => '../uploads/'.$user->UserImg,
         ]);
         return $this->fetch('chimg');
     }
@@ -128,7 +129,7 @@ class User extends Base
     public function saveImg($uid){
         if($this->request->isPost()){
             $file = request()->file('userImg');
-            $info = $file->move( '../public/uploads');
+            $info = $file->move( '../uploads');
             if($info){
                 UserModel::update(['Uid' => $uid,'UserImg' => $info->getSaveName()]);
             }else{
