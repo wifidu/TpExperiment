@@ -118,5 +118,4 @@ class User extends Model {
             return msg('success',1,"注册成功");
         }
     }
-
 }

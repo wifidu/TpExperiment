@@ -17,10 +17,8 @@ class Blog extends Base{
      */
     public function index(){
         $this->noLogin();
-        $auth = Session::get('user_auth');
         $this->assign([
             'Title' => '新建笔记',
-            'UserName'=>$auth['nickname'],
         ]);
         return $this->fetch();
     }
@@ -33,11 +31,9 @@ class Blog extends Base{
      */
     public function blog(){
         $this->noLogin();
-        $auth = Session::get('user_auth');
         $cateList = Cate::all();
         $this->assign([
             'Title' => '新建博文',
-            'UserName'=>$auth['nickname'],
             'cateList'=>$cateList,
         ]);
         return $this->fetch();

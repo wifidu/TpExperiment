@@ -1,0 +1,91 @@
+{extend name="public:father"/}
+{block name="left"}
+{/block}
+
+{block name="main"}
+
+<div class="container" style="padding-top: 2%">
+    <div class="row">
+        {include file="public/userleft" /}
+        <div class="col-md-7">
+            <div class="panel panel-info">
+                <div class="panel-heading">修改头像</div>
+                <div class="panel-body">
+
+                    <form id="data" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label>原头像</label>
+<!--                            <img src=>-->
+                        </div>
+                        <div class="form-group">
+                            <label>请选择图片:</label>
+                            <input type="file" id="exampleInputFile" name="userImg" required>
+                            <p class="help-block">你的微信个人账号，或者订阅号 </p>
+                        </div>
+                        <button id="submit" value="上传" class="btn btn-success">确认修改</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function uploadImg() {
+        var form = new FormData(document.getElementById("data"));
+        $.ajax({
+            type:'post',
+            url:"{:url('blog/user/saveimg',['uid'=>$Think.session.user_auth.uid])}",
+            data:form,
+            processData:false,
+            contentType:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.code === 200){
+                    swal({
+                        title: "修改成功!",
+                        // text: "You clicked the button!",
+                        icon: "success",
+                        button: false,
+                        timer: 1500,
+                    }).then(
+                        function () {
+                            $(location).attr('href',"{:url('blog/user/userimg')}");
+                        },
+                        function (dismiss) {
+                            if (dismiss === 'timer') {
+                                console.log('I was closed by the timer')
+                            }
+                        }
+                    );
+                }else {
+                    swal({
+                        title: "修改失败!",
+                        text: data.message,
+                        icon: "error",
+                        button: false,
+                        timer: 2000,
+                    }).then(
+                        function () {
+                            $(location).attr('href',"{:url('blog/user/userimg')}");
+                        },
+                        function (dismiss) {
+                            if (dismiss === 'timer') {
+                                console.log('I was closed by the timer')
+                            }
+                        }
+                    );
+                }
+            }
+        });
+    }
+    $(function () {
+        $('#submit').on('click',function () {
+            uploadImg();
+            return false;
+        })
+    })
+</script>
+{/block}
+{block name="footer"}{/block}

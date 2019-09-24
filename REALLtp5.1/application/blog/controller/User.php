@@ -44,7 +44,6 @@ class User extends Base
     {
         if($request->isAjax()){
             $data = $request->post();
-            $validate = new UserValidate;
             if($data['username'] == null or $data['Password'] == null) {
                 return msg('error',500,"帐号密码不能为空");
             }else{
@@ -92,12 +91,52 @@ class User extends Base
             $this->error("请求类型错误",'regist');
         }
     }
+
+    /**
+     * 修改资料入口
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/24 下午6:40
+     */
     public function userData(){
-        $auth = Session::get('user_auth');
         $this->assign([
-            'Title' => '首页',
-            'UserName'=>$auth['nickname'],
+            'Title' => '个人信息',
         ]);
         return $this->fetch('userdata');
+    }
+
+    /**
+     * 修改头像
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/24 下午6:54
+     */
+    public function userImg(){
+//        $user = UserModel::get(Session::get('user_auth')['uid']);
+        $this->assign([
+            'Title' => '修改头像',
+//            'Img' => 'uploads/'.$user->UserImg,
+        ]);
+        return $this->fetch('chimg');
+    }
+
+    /**
+     * 保存头像
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:2019/9/24 下午6:54
+     */
+    public function saveImg($uid){
+        if($this->request->isPost()){
+            $file = request()->file('userImg');
+            $info = $file->move( '../public/uploads');
+            if($info){
+                UserModel::update(['Uid' => $uid,'UserImg' => $info->getSaveName()]);
+            }else{
+                return msg('error',500,$file->getError());
+            }
+        }else{
+            $this->error('请求类型错误.');
+        }
+        return msg('success',200,'保存成功');
     }
 }

@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background: #eeeeee">
 <div class="container-fluid" >
     <nav class="navbar navbar-inverse ">
         <div class="container-fluid"  >
@@ -75,7 +75,7 @@
                     <li><a>你好</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {$UserName|default="游客"}
+                            {$Think.session.user_auth.nickname|default="游客"}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="user">
                             <li><a href="{:url('blog/user/userData')}">我的资料</a></li>
