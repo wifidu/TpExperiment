@@ -68,34 +68,11 @@
         </div>
     </div>
 </div>
-
-<div class="go-top" id="ttop">
-
-    <div class="arrow">
-        <button class="btn btn-success">TOP</button>
-    </div>
-
-    <div class="stick"><button class="btn btn-success">TOP</button></div>
-
-</div>
 <script type="text/javascript">
+    //显示博客文本
     $(function() {
         $("#content2").html($("#content1").text());
     });
-</script>
-<script>
-    $(document).ready(function(){
-        // $(window).scroll(function() {
-        //     if ($(window).scrollTop() > 500)
-        //         $('#ttop').show();
-        //     else
-        //         $('#ttop').hide();
-        // });
-        $('#ttop').click(function() {
-            $('html, body').animate({scrollTop: 0}, 1000);
-        });
-    });
-
 </script>
 {/block}
 {block name="footer"}{/block}
