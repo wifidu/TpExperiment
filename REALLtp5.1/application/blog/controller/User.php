@@ -116,7 +116,7 @@ class User extends Base
         $user = UserModel::get(Session::get('user_auth')['uid']);
         $this->assign([
             'Title' => '修改头像',
-            'Img' => '../uploads/'.$user->UserImg,
+            'Img' => '/img/49fc95e5da7729b5c440e602ccddb761.jpeg',
         ]);
         return $this->fetch('chimg');
     }
