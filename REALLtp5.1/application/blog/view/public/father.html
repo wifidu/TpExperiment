@@ -75,6 +75,7 @@
                     <li><a>你好</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img src="{$Think.session.user_auth.userImg}" width="20">
                             {$Think.session.user_auth.nickname|default="游客"}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="user">

@@ -18,8 +18,16 @@
         <div class="col-md-3">
                 <div class="panel panel-default" >
                     <div class="row" style="padding-top: 3%;margin: 5%">
-                        <span class="bold">{$Auth}</span>
+                        <div class="col-md-5">
+                            <span class="bold">{$Auth}</span>
+                        </div>
+                        <div class="col-md-2 col-md-offset-2">
+                            <a>
+                                <img src={$Think.session.user_auth.userImg} style="width:50px">
+                            </a>
+                        </div>
                     </div>
+
                     <HR><!--分割线-->
                     <div class="row" style="margin: 5%">
                         <div class="col-md-3 text-center">

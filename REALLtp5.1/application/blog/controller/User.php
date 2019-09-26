@@ -113,10 +113,8 @@ class User extends Base
      * @time:2019/9/24 下午6:54
      */
     public function userImg(){
-        $user = UserModel::get(Session::get('user_auth')['uid']);
         $this->assign([
             'Title' => '修改头像',
-            'Img' => '/img/49fc95e5da7729b5c440e602ccddb761.jpeg',
         ]);
         return $this->fetch('chimg');
     }
@@ -126,12 +124,12 @@ class User extends Base
      * @auther 杜韦凡 <875147715@qq.com>
      * @time:2019/9/24 下午6:54
      */
-    public function saveImg($uid){
+    public function saveImg($uid,UserModel $user){
         if($this->request->isPost()){
             $file = request()->file('userImg');
-            $info = $file->move( '../uploads');
+            $info = $file->move( '../public/uploads');
             if($info){
-                UserModel::update(['Uid' => $uid,'UserImg' => $info->getSaveName()]);
+                return $user->imgSave($uid,$info->getSaveName());
             }else{
                 return msg('error',500,$file->getError());
             }

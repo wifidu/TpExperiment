@@ -4,6 +4,7 @@
 namespace app\blog\model;
 
 use app\common\Md5;
+use think\facade\Env;
 use think\Model;
 
 class User extends Model {
@@ -90,6 +91,7 @@ class User extends Model {
             'nickname'        => $user->NickName,
             'last_login_time' => $user->LastLoginTime,
             'last_login_ip'   => get_client_ip(1),
+            'userImg'         => '/uploads/'.$user->UserImg,
         );
         session('user_auth', $auth);
         session('user_auth_sign', data_auth_sign($auth));
@@ -116,6 +118,20 @@ class User extends Model {
             return msg('error',-1,"注册失败");
         }else{
             return msg('success',1,"注册成功");
+        }
+    }
+
+    public function imgSave($uid,$imgPath){
+        $user = $this->get($uid);
+        $oldPath = $user->UserImg;
+            if ($oldPath!=null ? !unlink(Env::get('root_path')."public/uploads/".$oldPath) : false) {
+                return msg('error',500,"Error deleting ");
+            }else {
+            $user->UserImg = $imgPath;
+            if(!$user->save()){
+                return msg('error',500,'修改失败');
+            }
+            return msg('success',200,'修改成功');
         }
     }
 }

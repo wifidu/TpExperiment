@@ -6,6 +6,8 @@
 //JSON_UNESCAPED_SLASHES = 64
 //下面使用整数来代替。
 //JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES = 320
+use think\Env;
+
 /**
  * @param $title
  * @param int $code
@@ -23,9 +25,8 @@ function msg($title,$code=500,$message=''){
 //    return json_encode($msg,320);
     return $msg;
 }
-//function getSource(){
-//
-//}
+
+
 if(!function_exists('get_client_ip')){
     /**
      * 获取客户端IP地址
