@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+use think\Db;
 use think\facade\Env;
 use think\facade\Config;
 use think\Controller;
@@ -15,8 +16,8 @@ class Index extends Controller
         return 'hello,' . $name;
     }
 	public function test(){
-        phpinfo();
-	    return $this->fetch();
+        Db::table('think_blog')
+            ->field('');
 	}	//ssss
     public function home(){
         return $this->fetch();

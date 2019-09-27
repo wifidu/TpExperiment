@@ -34,6 +34,7 @@ class Blog extends Model {
         $blog = $this->where('id',($blogId))->find();
         $auth = User::where('Uid',($blog['user_id']))->find();
         $blog['auth'] = $auth['NickName'];
+        $blog['authImg'] = $auth['UserImg'];
 //        $bd = array_merge($auth,$blog);//后来居上???????????????/
         return $blog;
     }

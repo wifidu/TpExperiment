@@ -31,6 +31,7 @@ class Index extends Base
         $this->assign([
             'Title' => $blogData->title,
             'Auth'=>$blogData['auth'],
+            'authImg'=>'/uploads/'.$blogData['authImg'],
             'content'=>$blogData->content,
             'createTime'=>$blogData->create_time,
         ]);

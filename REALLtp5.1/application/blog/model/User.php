@@ -6,6 +6,7 @@ namespace app\blog\model;
 use app\common\Md5;
 use think\facade\Env;
 use think\Model;
+use think\facade\Session;
 
 class User extends Model {
     //默认主键
@@ -128,6 +129,7 @@ class User extends Model {
                 return msg('error',500,"Error deleting ");
             }else {
             $user->UserImg = $imgPath;
+            session('user_auth.userImg','/uploads/'.$imgPath);
             if(!$user->save()){
                 return msg('error',500,'修改失败');
             }
