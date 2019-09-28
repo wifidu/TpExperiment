@@ -6,7 +6,7 @@ namespace app\blog\model;
 
 use think\Model;
 
-class UserStart extends Model {
+class UserStar extends Model {
 
     protected $autoWriteTime = true;
 }

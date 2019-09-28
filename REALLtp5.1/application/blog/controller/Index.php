@@ -33,6 +33,13 @@ class Index extends Base
             'Auth'=>$blogData['auth'],
             'authImg'=>'/uploads/'.$blogData['authImg'],
             'content'=>$blogData->content,
+            'blogCount'=>$blogData['blogCount'],
+            'fans'=>$blogData['fans'],
+            'stars'=>$blogData['stars'],
+            'bid'=>$blogId,
+            'authId'=>$blogData['user_id'],
+            'starStatus'=>$blogData['starStatus'],
+            'collection'=>$blogData['collection'],
             'createTime'=>$blogData->create_time,
         ]);
         return $this->fetch('blogRead');

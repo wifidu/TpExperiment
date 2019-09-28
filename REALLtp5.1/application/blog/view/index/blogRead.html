@@ -19,7 +19,7 @@
                 <div class="panel panel-default" >
                     <div class="row" style="padding-top: 3%;margin: 5%">
                         <div class="col-md-5">
-                            <span class="bold">{$Auth}</span>
+                            <span class="bold" id="auth">{$Auth}</span>
                         </div>
                         <div class="col-md-2 col-md-offset-2">
                             <a><img src={$authImg} style="width:50px"></a>
@@ -30,19 +30,19 @@
                     <div class="row" style="margin: 5%">
                         <div class="col-md-3 text-center">
                             <span class="light">文章</span>
-                            <span class="light">10</span>
+                            <span class="light">{$blogCount}</span>
                         </div>
                         <div class="col-md-3 text-center">
                             <span class="light">粉丝</span>
-                            <span class="light">1</span>
+                            <span class="light">{$fans}</span>
                         </div>
                         <div class="col-md-3 text-center">
                             <span class="light">喜欢</span>
-                            <span class="light">0</span>
+                            <span class="light">{$stars}</span>
                         </div>
                         <div class="col-md-3 text-center">
                             <span class="light">收藏</span>
-                            <span class="light">2</span>
+                            <span class="light">{$collection}</span>
                         </div>
                     </div>
                     <HR><!--分割线-->
@@ -72,15 +72,18 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" value="{$bid}" id="bid">
+        <input type="hidden" value="{$Think.session.user_auth.uid}" id="uid">
+        <input type="hidden" value="{$authId}" id="authId">
         <div class="col-md-1" style="position: sticky; top: 46%;">
             <div class="btn-group-vertical tooltip-options">
-                <button  type="button" class="btn btn-default btn-lg " data-toggle="tooltip" data-placement="right" title="<h4>点赞</h4>" >
+                <button id = 'star' value="{$starStatus}" type="button" class="btn btn-default btn-lg " data-toggle="tooltip" data-placement="right" title="<h4>点赞</h4>" >
                     <span class="glyphicon glyphicon-thumbs-up"></span>
                 </button>
-                <button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="right" title="<h4>收藏</h4>">
+                <button id = 'collect' type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="right" title="<h4>收藏</h4>">
                     <span class="glyphicon glyphicon-heart"></span>
                 </button>
-                <button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="right" title="<h4>评论</h4>">
+                <button id = 'comment' type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="right" title="<h4>评论</h4>">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
             </div>
@@ -88,6 +91,72 @@
     </div>
 </div>
 <script type="text/javascript">
+    if ($('#star').attr("value") == 1){
+        $('#star').removeClass("btn-default");
+        $('#star').addClass("btn-danger");
+    }else {
+        $('#star').addClass("btn-default");
+        $('#star').removeClass("btn-danger");
+    }
+    $(function () {
+       $('#star').on('click',function () {
+           if ($('#star').attr("value") == 0){
+               $('#star').removeClass("btn-default");
+               $('#star').addClass("btn-danger");
+               $('#star').attr("value",1);
+           }else {
+               $('#star').addClass("btn-default");
+               $('#star').removeClass("btn-danger");
+               $('#star').attr("value",0);
+           }
+           var $value = $('#star').attr("value");
+           $.ajax({
+               type:'post',
+               url:"{:url('blog/blog/blogStar')}",
+               data:{
+                   status:$value,
+                   authId: $('#authId').attr("value"),
+                   uid: $('#uid').attr("value"),
+                   bid: $('#bid').attr("value"),
+
+               },
+               dataType:'json',
+               success:function (data) {
+                   if(data.code){
+                       if ($value){
+                           swal({
+                               title: "谢谢你!",
+                               // text: "You clicked the button!",
+                               icon: "success",
+                               button: false,
+                               timer: 1500,
+                           })
+                       }else {
+                           swal({
+                               title: data.message,
+                               // text: "You clicked the button!",
+                               icon: "error",
+                               button: false,
+                               timer: 1500,
+                           })
+                       }
+                   }else {
+                       alert(data.message);
+                   }
+
+               },
+               error: function (errorThrown) {
+                   swal({
+                       title: "/(ㄒoㄒ)/~~",
+                       // text: "You clicked the button!",
+                       icon: "error",
+                       button: false,
+                       timer: 1500,
+                   })
+               }
+           })
+       })
+    });
     //显示博客文本
     $(function() {
         $("#content2").html($("#content1").text());

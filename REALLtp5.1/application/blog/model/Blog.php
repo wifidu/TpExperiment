@@ -3,9 +3,10 @@
 
 namespace app\blog\model;
 
-use app\common;
-use think\Model;
 use app\blog\model\User;
+use app\common;
+use think\Db;
+use think\Model;
 
 class Blog extends Model {
 	protected $autoWriteTimestamp = true;//开启自动时间戳
@@ -26,6 +27,7 @@ class Blog extends Model {
 	    if(!$res){
             return msg('error',500,'保存失败');
         }else{
+	        User::where('Uid',$data['user_id'])->inc('BlogCount')->update();
 	        return msg('success',200,'发布成功');
         }
     }
@@ -35,8 +37,35 @@ class Blog extends Model {
         $auth = User::where('Uid',($blog['user_id']))->find();
         $blog['auth'] = $auth['NickName'];
         $blog['authImg'] = $auth['UserImg'];
+        $blog['blogCount'] = $auth['BlogCount'];
+        $blog['stars'] = $auth['stars'];
+        $blog['fans'] = $auth['Fans'];
+        $blog['collection'] = $auth['collection'];
+        $blog['starStatus'] =  UserStar::where('uid',session('user_auth.uid'))->where('bid',$blogId)->find()?1:0;
 //        $bd = array_merge($auth,$blog);//后来居上???????????????/
         return $blog;
+    }
+    public function blogStar($blogId,$uid,$auth,$status){
+	    if($status){
+	        try{
+                $res0 = User::where('Uid',$auth)->inc('stars')->update();
+                $res1 = Blog::where('id',$blogId)->inc('stars')->update();
+                $res2 = UserStar::create(['uid'=>$uid,'bid'=>$blogId]);
+            }catch (\Exception $e){
+                $this->error($e->getMessage());
+            }
+            if($res0 and $res1 and $res2)
+                return msg('success',1,'成功');
+            else return msg('error',0,'失败');
+        }else{
+            $res0 = User::where('Uid',$auth)->dec('stars')->update();
+            $res1 = Blog::where('id',$blogId)->dec('stars')->update();
+            $res2 = UserStar::where('uid',$uid)->delete();
+            if($res0 and $res1 and $res2)
+                return msg('success',1,'成功');
+            else return msg('error',0,'失败');
+        }
+
     }
 
 }

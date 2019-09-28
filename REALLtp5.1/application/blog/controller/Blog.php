@@ -60,4 +60,15 @@ class Blog extends Base{
             $this->error('请求类型错误！');
         }
     }
+    public function blogStar(BlogModel $blogModel){
+        if(Request::isAjax()){
+            $data = Request::post();
+            $data['uid'] = (int)$data['uid'];
+            $data['bid'] = (int)$data['bid'];
+            $data['authId'] = (int)$data['authId'];
+            $data['status'] = (int)$data['status'];
+//            return msg('asd',1,'asdas');
+            return $blogModel->blogStar($data['bid'],$data['uid'],$data['authId'],$data['status']);
+        }
+    }
 }
