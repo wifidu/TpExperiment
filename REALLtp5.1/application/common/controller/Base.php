@@ -18,7 +18,10 @@ class Base extends Controller{
     }
     public function noLogin(){
         if(!Session::has('user_auth')){
-            $this->error('请你先登录。','index/index');
+            return msg('error',500,'请你先登录');
+//            $this->error('请你先登录。','index/index');
+        }else{
+            return 0;
         }
     }
 }

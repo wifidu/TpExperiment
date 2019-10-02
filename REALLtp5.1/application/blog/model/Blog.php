@@ -46,7 +46,7 @@ class Blog extends Model {
         return $blog;
     }
     public function blogStar($blogId,$uid,$auth,$status){
-	    if($status){
+	    if(!$status){
 	        try{
                 $res0 = User::where('Uid',$auth)->inc('stars')->update();
                 $res1 = Blog::where('id',$blogId)->inc('stars')->update();
@@ -56,14 +56,14 @@ class Blog extends Model {
             }
             if($res0 and $res1 and $res2)
                 return msg('success',1,'成功');
-            else return msg('error',0,'失败');
+            else return msg('error',500,'点赞失败');
         }else{
             $res0 = User::where('Uid',$auth)->dec('stars')->update();
             $res1 = Blog::where('id',$blogId)->dec('stars')->update();
-            $res2 = UserStar::where('uid',$uid)->delete();
+            $res2 = UserStar::where('uid',$uid)->where('bid',$blogId)->delete();
             if($res0 and $res1 and $res2)
                 return msg('success',1,'成功');
-            else return msg('error',0,'失败');
+            else return msg('error',500,'取消点赞失败');
         }
 
     }

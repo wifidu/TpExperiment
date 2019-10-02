@@ -98,17 +98,20 @@
         $('#star').addClass("btn-default");
         $('#star').removeClass("btn-danger");
     }
+    function star(){
+        if ($('#star').attr("value") == 0){
+            $('#star').removeClass("btn-default");
+            $('#star').addClass("btn-danger");
+            $('#star').attr("value",1);
+        }else {
+            $('#star').addClass("btn-default");
+            $('#star').removeClass("btn-danger");
+            $('#star').attr("value",0);
+        }
+    }
     $(function () {
        $('#star').on('click',function () {
-           if ($('#star').attr("value") == 0){
-               $('#star').removeClass("btn-default");
-               $('#star').addClass("btn-danger");
-               $('#star').attr("value",1);
-           }else {
-               $('#star').addClass("btn-default");
-               $('#star').removeClass("btn-danger");
-               $('#star').attr("value",0);
-           }
+
            var $value = $('#star').attr("value");
            $.ajax({
                type:'post',
@@ -122,28 +125,46 @@
                },
                dataType:'json',
                success:function (data) {
-                   if(data.code){
-                       if ($value){
-                           swal({
-                               title: "谢谢你!",
-                               // text: "You clicked the button!",
-                               icon: "success",
-                               button: false,
-                               timer: 1500,
-                           })
-                       }else {
+                   switch(data.code){
+                       case 1:
+                           star();
+                           if ($value == 0){
+                               swal({
+                                   title: "谢谢你!",
+                                   // text: "You clicked the button!",
+                                   icon: "success",
+                                   button: false,
+                                   timer: 1500,
+                               });
+                           }else {
+                               swal({
+                                   title: "曾经爱过!",
+                                   // text: "You clicked the button!",
+                                   icon: "success",
+                                   button: false,
+                                   timer: 1500,
+                               });
+                           }
+                           break;
+                       case 0:
                            swal({
                                title: data.message,
                                // text: "You clicked the button!",
                                icon: "error",
                                button: false,
                                timer: 1500,
-                           })
-                       }
-                   }else {
-                       alert(data.message);
+                           });
+                           break;
+                       case 500:
+                           swal({
+                               title: data.message,
+                               // text: "You clicked the button!",
+                               icon: "error",
+                               button: false,
+                               timer: 1500,
+                           });
+                           break;
                    }
-
                },
                error: function (errorThrown) {
                    swal({

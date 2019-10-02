@@ -61,7 +61,10 @@ class Blog extends Base{
         }
     }
     public function blogStar(BlogModel $blogModel){
-        if(Request::isAjax()){
+        $status = $this->noLogin();
+        if($this->noLogin()){
+            return $status;
+        }elseif(Request::isAjax()){
             $data = Request::post();
             $data['uid'] = (int)$data['uid'];
             $data['bid'] = (int)$data['bid'];

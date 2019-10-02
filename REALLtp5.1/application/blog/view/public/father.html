@@ -43,6 +43,7 @@
         <div class="container-fluid"  >
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+                    <input type="hidden" value="{$Think.session.user_auth.uid|default=0}" id = "userId" >
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -55,8 +56,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse nav-pills navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav  navbar-nav ">
-                    <li ><a href="{:url('blog/blog/index')}">社交 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="{:url('blog/blog/blog')}">我的博文</a></li>
+                    <li id="user1" ><a href="{:url('blog/blog/index')}">社交 <span class="sr-only">(current)</span></a></li>
+                    <li id="user2" ><a href="{:url('blog/blog/blog')}">我的博文</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">社区 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -115,6 +116,13 @@
 <div id="ttop"><button class="btn btn-default btn-lg " style="background: #ffbde6"><span class=" glyphicon glyphicon-chevron-up "></span></button> </div>
 
 <script>
+    if($('#userId').attr('value') == 0){
+        $('#user1').hide();
+        $('#user2').hide();
+    }else {
+        $('#user1').show();
+        $('#user2').show();
+    }
     $(document).ready(function(){
         $(window).scroll(function() {
             if ($(window).scrollTop() > 30)
