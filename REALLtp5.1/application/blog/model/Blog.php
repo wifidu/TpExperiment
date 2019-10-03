@@ -67,5 +67,14 @@ class Blog extends Model {
         }
 
     }
+    public function blogMy(){
+        $blogList = $this
+            ->where('user_id', session('user_auth.uid'))
+            ->order('id', 'desc')
+            ->paginate(10);
+        $userData = User::where('Uid',session('user_auth.uid'))->find();
+        $userData['blogList'] = $blogList;
+        return $userData;
+    }
 
 }
