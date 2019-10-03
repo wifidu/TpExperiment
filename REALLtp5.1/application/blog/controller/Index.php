@@ -44,5 +44,13 @@ class Index extends Base
         ]);
         return $this->fetch('blogRead');
     }
+    public function myBlog(){
+        $blogList = Blog::where('user_id', session('user_auth.uid'))->order('id', 'desc')->paginate(10);
+        $this->assign([
+            'Title' => '我的博客',
+            'blogList' =>$blogList,
+        ]);
+        return $this->fetch('myBlog');
+    }
 
 }

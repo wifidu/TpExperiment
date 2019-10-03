@@ -1,0 +1,35 @@
+{extend name="public:father"}
+{block name="left"}{/block}
+{block name="main"}
+<div class="container" style="padding-left: 150px">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>最近发表文章</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" >
+                        <ul class="list-group">
+                            {volist name='blogList' id='blog'}
+                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
+                                <span>{$blog.title}</span>
+                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                            </a>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <div class="text-center">{$blogList|raw}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+{block name="footer"}{/block}
