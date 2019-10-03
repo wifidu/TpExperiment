@@ -1,0 +1,64 @@
+{extend name="public:father"}
+{block name="left"}{/block}
+{block name="main"}
+<div class="container" >
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-md-8" >
+                        <img src="{$authImg}" style="width: 220px">
+                    </div>
+                    <div class="col-md-4 "  style="padding-top: 25%" >
+                        <span style="font-weight: bold;font-size: 18px">{$nickname}</span>
+                    </div>
+                </div>
+                <HR>
+                <div class="row" style="font-weight: 500">
+                    <div class="col-md-3 text-center">文章</div>
+                    <div class="col-md-3 text-center">粉丝</div>
+                    <div class="col-md-3 text-center">喜欢</div>
+                    <div class="col-md-3 text-center">收藏</div>
+                </div>
+                <div class="row" style="font-weight: 800">
+                    <div class="col-md-3 text-center">{$blogCount}</div>
+                    <div class="col-md-3 text-center">{$fans}</div>
+                    <div class="col-md-3 text-center">{$stars}</div>
+                    <div class="col-md-3 text-center">{$collection}</div>
+                </div>
+                <HR>
+                <div class="row text-center">
+                    <div class="col-md-4 col-md-offset-2" style="font-weight: 500">
+                        访问量: 0
+                    </div>
+                    <div class="col-md-4" style="font-weight: 500">
+                        排名： 100
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>最近发表文章</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" >
+                        <ul class="list-group">
+                            {volist name='blogList' id='blog'}
+                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
+                                <span>{$blog.title}</span>
+                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                            </a>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <div class="text-center">{$blogList|raw}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+{block name="footer"}{/block}
