@@ -1,17 +1,45 @@
 {extend name="public:father"}
 {block name="left"}{/block}
 {block name="main"}
-<div class="container" >
+<div class="container" style="padding-top:2%">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <div class="list-group text-center ">
+                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Ta的文章</a>
+                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-comment"></span>Ta的回复</a>
+                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-calendar"></span>Ta的动态</a>
+                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-heart"></span>Ta的点赞</a>
+                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-star"></span>Ta的收藏</a>
+            </div>
+        </div>
+        <div class="col-md-7">
             <div class="panel panel-default">
-                <div class="row">
-                    <div class="col-md-8" >
-                        <img src="{$authImg}" style="width: 220px">
+                <div class="panel-heading">
+                    <h3>最近发表文章</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" >
+                        <ul class="list-group">
+                            {volist name='blogList' id='blog'}
+                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
+                                <span>{$blog.title}</span>
+                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                            </a>
+                            {/volist}
+                        </ul>
                     </div>
-                    <div class="col-md-4 "  style="padding-top: 25%" >
-                        <span style="font-weight: bold;font-size: 18px">{$nickname}</span>
-                    </div>
+                    <div class="text-center">{$blogList|raw}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="row text-center" >
+                    <img src="{$authImg}" style="width: 260px;">
+                </div>
+                <HR>
+                <div class="row text-center">
+                    <span style="font-weight: bold;font-size: 18px">{$nickname}</span>
                 </div>
                 <HR>
                 <div class="row" style="font-weight: 500">
@@ -32,32 +60,18 @@
                         访问量: 0
                     </div>
                     <div class="col-md-4" style="font-weight: 500">
-                        排名： 100
+                        排名：100
                     </div>
+                </div>
+                <HR>
+                <div class="row text-center ">
+                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-plus"></span> 关注</a>
+                </div>
+                <div class="row text-center" style="padding-top: 2%">
+                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-envelope"></span> 私信</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>最近发表文章</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="list-group" >
-                        <ul class="list-group">
-                            {volist name='blogList' id='blog'}
-                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
-                                <span>{$blog.title}</span>
-                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
-                            </a>
-                            {/volist}
-                        </ul>
-                    </div>
-                    <div class="text-center">{$blogList|raw}</div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 {/block}

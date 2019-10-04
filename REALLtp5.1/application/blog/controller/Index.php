@@ -6,6 +6,7 @@ use think\exception\DbException;
 use think\facade\Request;
 use think\facade\Session;
 use app\blog\model\Blog ;
+use app\blog\model\User;
 
 class Index extends Base
 {
@@ -45,7 +46,8 @@ class Index extends Base
         return $this->fetch('blogRead');
     }
     public function myBlog(Blog $blogModel){
-        $userBlog = $blogModel->blogMy();
+        $uid = session('user_auth.uid');
+        $userBlog = $blogModel->blogAllFind($uid);
         $this->assign([
             'Title' => '我的博客',
             'blogList' =>$userBlog['blogList'],
@@ -57,6 +59,21 @@ class Index extends Base
             'collection'=>$userBlog['collection'],
         ]);
         return $this->fetch('myBlog');
+    }
+    public function othersBlog($authId,Blog $blogModel){
+        $authBlog = $blogModel->blogAllFind($authId);
+        $this->assign([
+            'Title' => $authBlog['NickName'],
+            'nickname'=>$authBlog['NickName'],
+            'authImg'=>'/uploads/'.$authBlog['UserImg'],
+            'fans'=>$authBlog['Fans'],
+            'blogCount'=>$authBlog['BlogCount'],
+            'stars'=>$authBlog['stars'],
+            'authId'=>$authBlog['Uid'],
+            'collection'=>$authBlog['collection'],
+            'blogList'=>$authBlog['blogList'],
+        ]);
+        return $this->fetch('othersBlog');
     }
 
 }
