@@ -14,6 +14,10 @@
     {load href="/static/simditor/site/assets/scripts/hotkeys.js" /}
     {load href="/static/simditor/site/assets/scripts/uploader.js" /}
     {load href="/static/simditor/site/assets/scripts/simditor.js" /}
+
+	{load href="/static/snow/snowfall.jquery.js" /}
+
+
     <style>
         #ttop {
             opacity:0.5;
@@ -34,16 +38,25 @@
             background: #a3b2f8;
         }
 		body {
-				background-image:url("/timg.jpeg");
+				background-image:url("/bg.jpg");
 				background-attachment:fixed;
 				background-repeat:no-repeat;
 				background-position:center;
 				background-size: cover;
 		}
     </style>
-
+    <style>
+        .snowfall-flakes{animation:sakura 1s linear 0s infinite;}
+        @keyframes sakura{
+            0% {transform:rotate3d(0, 0, 0, 0deg);}
+            25%{transform:rotate3d(1, 1, 0, 60deg);}
+            50%{transform:rotate3d(1, 1, 0, 0deg);}
+            75%{transform:rotate3d(1, 0, 0, 60deg);}
+            100% {transform:rotate3d(1, 0, 0, 0deg);}
+        }
+    </style>
 </head>
-<body >
+<body style="opacity:0.9;">
 <div class="container-fluid" >
     <nav class="navbar navbar-inverse ">
         <div class="container-fluid"  >
@@ -164,5 +177,15 @@
     //     document.documentElement.scrollTop = 0;
     // }
 </script>
+
+<script>
+    $(function () {
+        $(document).snowfall({image:"/img/1.png", flakeCount:10, minSpeed:1, minSize:8, maxSize:15,});
+        $(document).snowfall({image:"/img/2.png", flakeCount:10, minSpeed:1, minSize:8, maxSize:15,});
+        $(document).snowfall({image:"/img/3.png", flakeCount:10, minSpeed:1, minSize:8, maxSize:15,});
+        $(document).snowfall({image:"/img/4.png", flakeCount:10, minSpeed:1, minSize:8, maxSize:15,});
+    })
+</script>
+
 </body>
 </html>
