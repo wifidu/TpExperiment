@@ -74,4 +74,13 @@ class Blog extends Base{
             return $blogModel->blogStar($data['bid'],$data['uid'],$data['authId'],$data['status']);
         }
     }
+    public function blogSearch(){
+        $blogMap = Request::get('search');
+        $blogList = BlogModel::where('title','like','%'.$blogMap.'%')->order('id', 'desc')->paginate(10);
+        $this->assign([
+           'blogList'=>$blogList,
+            'Title'=>'搜索结果',
+        ]);
+        return $this->fetch('blogSearch');
+    }
 }

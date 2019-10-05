@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-//
     <meta charset="UTF-8">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,9 +91,9 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" method="get" action="{:url('blog/blog/blogSearch')}" >
                     <div class="form-group"  >
-                        <input id = 'search'type="text" style="width: 110px" class="form-control" placeholder="Search">
+                        <input required id='search' name="search" type="text" style="width: 110px" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
