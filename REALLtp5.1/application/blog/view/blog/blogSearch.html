@@ -1,0 +1,49 @@
+{extend name="public:father"/}
+{block name="left"}
+
+{/block}
+{block name="main"}
+<div class="container" style="padding-top: 2%">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>搜索结果</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" >
+                        <ul class="list-group">
+                            {volist name='blogList' id='blog'}
+                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
+                                <span>{$blog.title}</span>
+                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                            </a>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <div class="text-center">{$blogList|raw}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 " >
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    社区动态
+                </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">最新</a></li>
+                    <li role="presentation"><a href="#">热门</a></li>
+                    <li role="presentation"><a href="#">Profile</a></li>
+                </ul>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+{block name="footer"}
+
+{/block}
