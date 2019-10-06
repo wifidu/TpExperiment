@@ -53,7 +53,7 @@ class Blog extends Model {
                 $res1 = Blog::where('id',$blogId)->inc('stars')->update();
                 $res2 = UserStar::create(['uid'=>$uid,'bid'=>$blogId]);
             }catch (\Exception $e){
-                $this->error($e->getMessage());
+                return msg('error',500,$e->getMessage());
             }
             if($res0 and $res1 and $res2)
                 return msg('success',1,'成功');
@@ -74,7 +74,7 @@ class Blog extends Model {
                 $res1 = Blog::where('id',$blogId)->inc('collection')->update();
                 $res2 = Db::name('UserCollection')->insert(['uid'=>$uid,'bid'=>$blogId]);
             }catch (\Exception $e){
-                $this->error($e->getMessage());
+              return msg('error',500,$e->getMessage());
             }
             if($res0 and $res1 and $res2)
                 return msg('success',1,'成功');
