@@ -31,6 +31,7 @@ class User extends Base
      */
     public function loginOut(){
         Session::clear();
+		$this->assign('Title',"用户登录");
         return $this->fetch('user/login');
     }
 
