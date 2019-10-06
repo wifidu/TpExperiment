@@ -74,6 +74,19 @@ class Blog extends Base{
             return $blogModel->blogStar($data['bid'],$data['uid'],$data['authId'],$data['status']);
         }
     }
+    public function blogCollect(BlogModel $blogModel){
+        $status = $this->noLogin();
+        if($this->noLogin()){
+            return $status;
+        }elseif(Request::isAjax()){
+            $data = Request::post();
+            $data['uid'] = (int)$data['uid'];
+            $data['bid'] = (int)$data['bid'];
+            $data['authId'] = (int)$data['authId'];
+            $data['status'] = (int)$data['status'];
+            return $blogModel->blogStar($data['bid'],$data['uid'],$data['authId'],$data['status']);
+        }
+    }
     public function blogSearch(){
         $blogMap = Request::get('search');
         $blogList = BlogModel::where('title','like','%'.$blogMap.'%')->order('id', 'desc')->paginate(10);
@@ -83,4 +96,5 @@ class Blog extends Base{
         ]);
         return $this->fetch('blogSearch');
     }
+
 }

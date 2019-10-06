@@ -65,7 +65,9 @@ class Blog extends Model {
                 return msg('success',1,'成功');
             else return msg('error',500,'取消点赞失败');
         }
-
+    }
+    public function blogCollect(){
+	    
     }
     public function blogAllFind($uid){
         $blogList = $this

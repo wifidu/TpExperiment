@@ -139,7 +139,9 @@ class User extends Base
         }
         return msg('success',200,'保存成功');
     }
-    public function userStar(){
+    public function userCentre(){
 
+        return $this->fetch('userCentre');
     }
+
 }
