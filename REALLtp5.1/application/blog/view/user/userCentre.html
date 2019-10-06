@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="list-group" >
                         <ul class="list-group">
-                            {volist name='blogList' id='blog'}
+                            {volist name='blogCollectList' id='blog'}
                             <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item">
                                 <span>{$blog.title}</span>
                                 <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
@@ -28,7 +28,7 @@
                             {/volist}
                         </ul>
                     </div>
-                    <div class="text-center">{$blogList|raw}</div>
+                    <div class="text-center">{$blogCollect|raw}</div>
                 </div>
             </div>
         </div>

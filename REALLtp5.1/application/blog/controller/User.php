@@ -8,6 +8,7 @@ use think\facade\Env;
 use think\Request;
 use app\blog\model\User as UserModel;
 use think\facade\Session;
+use app\blog\model\Blog as BlogModel;
 use app\blog\validate\User as UserValidate;
 use think\facade\Validate;
 
@@ -139,8 +140,13 @@ class User extends Base
         }
         return msg('success',200,'保存成功');
     }
-    public function userCentre(){
-
+    public function userCentre(BlogModel $blogModel){
+        $uid = session('user_auth.uid');
+        $blogCollectList = $blogModel->blogCollectFind($uid);
+        $this->assign([
+            'Title'=> session('user_auth.nickname').'|个人中心',
+            'blogCollectList'=>$blogCollectList,
+        ]);
         return $this->fetch('userCentre');
     }
 

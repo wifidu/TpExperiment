@@ -97,5 +97,8 @@ class Blog extends Model {
         $userData['blogList'] = $blogList;
         return $userData;
     }
+    public function blogCollectFind($uid){
+        $bids = Db::table('think_user_collect')->where('uid',$uid)->column('bid');
+    }
 
 }
