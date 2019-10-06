@@ -42,6 +42,7 @@ class Blog extends Model {
         $blog['fans'] = $auth['Fans'];
         $blog['collection'] = $auth['collection'];
         $blog['starStatus'] =  UserStar::where('uid',session('user_auth.uid'))->where('bid',$blogId)->find()?1:0;
+        $blog['collectStatus'] =  Db::table('think_user_collection')->where('uid',session('user_auth.uid'))->where('bid',$blogId)->find()?1:0;
 //        $bd = array_merge($auth,$blog);//后来居上???????????????/
         return $blog;
     }
@@ -66,8 +67,26 @@ class Blog extends Model {
             else return msg('error',500,'取消点赞失败');
         }
     }
-    public function blogCollect(){
-	    
+    public function blogCollect($blogId,$uid,$auth,$status){
+        if(!$status){
+            try{
+                $res0 = User::where('Uid',$auth)->inc('collection')->update();
+                $res1 = Blog::where('id',$blogId)->inc('collection')->update();
+                $res2 = Db::name('UserCollection')->insert(['uid'=>$uid,'bid'=>$blogId]);
+            }catch (\Exception $e){
+                $this->error($e->getMessage());
+            }
+            if($res0 and $res1 and $res2)
+                return msg('success',1,'成功');
+            else return msg('error',500,'收藏失败');
+        }else{
+            $res0 = User::where('Uid',$auth)->dec('collection')->update();
+            $res1 = Blog::where('id',$blogId)->dec('collection')->update();
+            $res2 = Db::name('UserCollection')->where('uid',$uid)->where('bid',$blogId)->delete();
+            if($res0 and $res1 and $res2)
+                return msg('success',1,'成功');
+            else return msg('error',500,'取消收藏失败');
+        }
     }
     public function blogAllFind($uid){
         $blogList = $this

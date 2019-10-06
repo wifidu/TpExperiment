@@ -40,6 +40,7 @@ class Index extends Base
             'bid'=>$blogId,
             'authId'=>$blogData['user_id'],
             'starStatus'=>$blogData['starStatus'],
+            'collectStatus'=>$blogData['collectStatus'],
             'collection'=>$blogData['collection'],
             'createTime'=>$blogData->create_time,
         ]);

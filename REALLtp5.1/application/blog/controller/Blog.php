@@ -61,9 +61,9 @@ class Blog extends Base{
         }
     }
     public function blogStar(BlogModel $blogModel){
-        $status = $this->noLogin();
+        $loginStatus = $this->noLogin();
         if($this->noLogin()){
-            return $status;
+            return $loginStatus;
         }elseif(Request::isAjax()){
             $data = Request::post();
             $data['uid'] = (int)$data['uid'];
@@ -75,16 +75,16 @@ class Blog extends Base{
         }
     }
     public function blogCollect(BlogModel $blogModel){
-        $status = $this->noLogin();
+        $loginStatus = $this->noLogin();
         if($this->noLogin()){
-            return $status;
+            return $loginStatus;
         }elseif(Request::isAjax()){
             $data = Request::post();
             $data['uid'] = (int)$data['uid'];
             $data['bid'] = (int)$data['bid'];
             $data['authId'] = (int)$data['authId'];
             $data['status'] = (int)$data['status'];
-            return $blogModel->blogStar($data['bid'],$data['uid'],$data['authId'],$data['status']);
+            return $blogModel->blogCollect($data['bid'],$data['uid'],$data['authId'],$data['status']);
         }
     }
     public function blogSearch(){

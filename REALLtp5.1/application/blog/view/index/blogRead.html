@@ -84,7 +84,7 @@
             <button id = 'star' value="{$starStatus}" type="button" class="btn btn-default btn-lg " data-toggle="tooltip" data-placement="left" title="<h4>点赞</h4>" >
                 <span class="glyphicon glyphicon-heart"></span>
             </button>
-            <button id = 'collect' type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="left" title="<h4>收藏</h4>">
+            <button id = 'collect' value="{$collectStatus}" type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="left" title="<h4>收藏</h4>">
                 <span class="glyphicon glyphicon-star"></span>
             </button>
             <button id = 'comment' type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="left" title="<h4>评论</h4>">
@@ -94,24 +94,97 @@
     </div>
 </div>
 <script type="text/javascript">
-    if ($('#star').attr("value") == 1){
-        $('#star').removeClass("btn-default");
-        $('#star').addClass("btn-danger");
-    }else {
-        $('#star').addClass("btn-default");
-        $('#star').removeClass("btn-danger");
-    }
-    function star(){
-        if ($('#star').attr("value") == 0){
-            $('#star').removeClass("btn-default");
-            $('#star').addClass("btn-danger");
-            $('#star').attr("value",1);
+    function clickStatus(id) {
+        if ($(id).attr("value") == 1){
+            $(id).removeClass("btn-default");
+            $(id).addClass("btn-danger");
         }else {
-            $('#star').addClass("btn-default");
-            $('#star').removeClass("btn-danger");
-            $('#star').attr("value",0);
+            $(id).addClass("btn-default");
+            $(id).removeClass("btn-danger");
         }
     }
+    function userClick(id){
+        if ($(id).attr("value") == 0){
+            $(id).removeClass("btn-default");
+            $(id).addClass("btn-danger");
+            $(id).attr("value",1);
+        }else {
+            $(id).addClass("btn-default");
+            $(id).removeClass("btn-danger");
+            $(id).attr("value",0);
+        }
+    }
+    clickStatus('#collect');
+    $(function () {
+        $('#collect').on('click',function () {
+
+            var $value = $('#collect').attr("value");
+            $.ajax({
+                type:'post',
+                url:"{:url('blog/blog/blogCollect')}",
+                data:{
+                    status:$value,
+                    authId: $('#authId').attr("value"),
+                    uid: $('#uid').attr("value"),
+                    bid: $('#bid').attr("value"),
+
+                },
+                dataType:'json',
+                success:function (data) {
+                    switch(data.code){
+                        case 1:
+                            userClick('#collect');
+                            if ($value == 0){
+                                swal({
+                                    title: "谢谢收藏!",
+                                    // text: "You clicked the button!",
+                                    icon: "success",
+                                    button: false,
+                                    timer: 1500,
+                                });
+                            }else {
+                                swal({
+                                    title: "曾经爱过哟",
+                                    // text: "You clicked the button!",
+                                    icon: "success",
+                                    button: false,
+                                    timer: 1500,
+                                });
+                            }
+                            break;
+                        case 0:
+                            swal({
+                                title: data.message,
+                                // text: "You clicked the button!",
+                                icon: "error",
+                                button: false,
+                                timer: 1500,
+                            });
+                            break;
+                        case 500:
+                            swal({
+                                title: data.message,
+                                // text: "You clicked the button!",
+                                icon: "error",
+                                button: false,
+                                timer: 1500,
+                            });
+                            break;
+                    }
+                },
+                error: function (errorThrown) {
+                    swal({
+                        title: "/(ㄒoㄒ)/~~",
+                        // text: "You clicked the button!",
+                        icon: "error",
+                        button: false,
+                        timer: 1500,
+                    })
+                }
+            })
+        })
+    });
+    clickStatus('#star');
     $(function () {
        $('#star').on('click',function () {
 
@@ -130,10 +203,10 @@
                success:function (data) {
                    switch(data.code){
                        case 1:
-                           star();
+                           userClick('#star');
                            if ($value == 0){
                                swal({
-                                   title: "谢谢你!",
+                                   title: "谢谢点赞!",
                                    // text: "You clicked the button!",
                                    icon: "success",
                                    button: false,
