@@ -3,9 +3,28 @@
 
 {/block}
 {block name="main"}
+
 <div class="container" style="padding-top: 2% ;margin-bottom: 100px;">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-3 col-md-push-9" >
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    社区动态
+                </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">公告</a></li>
+                    <li role="presentation"><a href="#">热门</a></li>
+                    <li role="presentation"><a href="#">Profile</a></li>
+                </ul>
+                <div class="panel-body" >
+						<p style="font-weight:bold;" >
+							李厚宾，众所周知，先礼后兵。<br>
+							李厚宾是个傻，穿个蓝裤衩，没人和他耍！
+						</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-md-pull-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>最近发表文章</h3>
@@ -25,22 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 " >
-            <div class="panel panel-info">
-                <div class="panel-heading ">
-                    社区动态
-                </div>
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">最新</a></li>
-                    <li role="presentation"><a href="#">热门</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                </ul>
-                <div class="panel-body">
-
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 {/block}
