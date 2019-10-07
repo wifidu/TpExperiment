@@ -73,7 +73,7 @@ class Blog extends Model {
             try{
                 $res0 = User::where('Uid',$auth)->inc('collection')->update();
                 $res1 = Blog::where('id',$blogId)->inc('collection')->update();
-                $res2 = Db::name('UserCollection')->insert(['uid'=>$uid,'bid'=>$blogId]);
+                $res2 = UserCollection::create(['uid'=>$uid,'bid'=>$blogId]);
             }catch (\Exception $e){
               return msg('error',500,$e->getMessage());
             }
@@ -83,7 +83,7 @@ class Blog extends Model {
         }else{
             $res0 = User::where('Uid',$auth)->dec('collection')->update();
             $res1 = Blog::where('id',$blogId)->dec('collection')->update();
-            $res2 = Db::name('UserCollection')->where('uid',$uid)->where('bid',$blogId)->delete();
+            $res2 = UserCollection::where('uid',$uid)->where('bid',$blogId)->delete();
             if($res0 and $res1 and $res2)
                 return msg('success',1,'成功');
             else return msg('error',500,'取消收藏失败');
@@ -106,6 +106,15 @@ class Blog extends Model {
 	        return msg('error',500,$e->getMessage());
         }
 		return $blogCollectList;
+    }
+    public function blogStarFind($uid){
+        try{
+            $bids = Db::table('think_user_star')->where('uid',$uid)->column('bid');
+            $blogCollectList = $this->whereIn('id',$bids,'or')->paginate(10);
+        }catch (Exception $e){
+            return msg('error',500,$e->getMessage());
+        }
+        return $blogCollectList;
     }
 
 }

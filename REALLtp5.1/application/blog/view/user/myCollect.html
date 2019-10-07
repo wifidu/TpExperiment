@@ -20,7 +20,7 @@
     {load href="/static/simditor/site/assets/scripts/uploader.js" /}
     {load href="/static/simditor/site/assets/scripts/simditor.js" /}
 
-	{load href="/static/snow/snowfall.jquery.js" /}
+    {load href="/static/snow/snowfall.jquery.js" /}
 
 
     <style>
@@ -42,13 +42,13 @@
         pre {
             background: #a3b2f8;
         }
-		body {
-				background-image:url("/bg.jpg");
-				background-attachment:fixed;
-				background-repeat:no-repeat;
-				background-position:center;
-				background-size: cover;
-		}
+        body {
+            background-image:url("/bg.jpg");
+            background-attachment:fixed;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size: cover;
+        }
     </style>
     <style>
         .snowfall-flakes{animation:sakura 1s linear 0s infinite;}
@@ -67,14 +67,14 @@
         <div class="container-fluid"  >
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                    <input type="hidden" value="{$Think.session.user_auth.uid|default=0}" id = "userId" >
+                <input type="hidden" value="{$Think.session.user_auth.uid|default=0}" id = "userId" >
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<a class="navbar-brand active" href="{:url('blog/index/index')}">{$SiteName|default="Home"}</a>
+                <a class="navbar-brand active" href="{:url('blog/index/index')}">{$SiteName|default="Home"}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -110,7 +110,7 @@
                             <li><a href="{:url('blog/user/userData')}"><span class="glyphicon glyphicon-cog"></span>编辑资料</a></li>
                             <li><a href="{:url('blog/blog/blog')}"><span class="glyphicon glyphicon-plus"></span>新建博客</a></li>
                             <li role="separator" class="divider"></li>
-							<li><a href="{:url('blog/user/loginOut')}"><span class="glyphicon glyphicon-log-in"></span>退出登录</a></li>
+                            <li><a href="{:url('blog/user/loginOut')}"><span class="glyphicon glyphicon-log-in"></span>退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -134,11 +134,85 @@
         </div>
     </div>
 </div>
-{block name="left"}左边分栏{/block}
-{block name="main"}主内容{/block}
-{block name="footer"}底部{/block}
-<div id="ttop"><button class="btn btn-default btn-lg " style="background: #ffbde6"><span class=" glyphicon glyphicon-chevron-up "></span></button> </div>
+<!--*****************************************************************-->
 
+<div class="container" style="padding-top:2%">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group text-center ">
+                <a id="myTwees" type="button" class="list-group-item" href="{:url('blog/user/myTweet')}"><span class="glyphicon glyphicon-list-alt"></span> 我的动态</a>
+                <a id="myBlog" type="button" class="list-group-item" href="{:url('blog/user/myBlog')}"><span class="glyphicon glyphicon-calendar"></span>我的文章</a>
+                <a id="myStar" type="button" class="list-group-item" href="{:url('blog/user/myStar')}"><span class="glyphicon glyphicon-heart"></span>我的点赞</a>
+                <a id="myCollect" type="button" class="list-group-item" href="{:url('blog/user/myCollect')}"><span class="glyphicon glyphicon-star"></span>我的收藏</a>
+                <a id="myReply" type="button" class="list-group-item" href="{:url('blog/user/myReply')}"><span class="glyphicon glyphicon-comment"></span>我的回复</a>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>{$userTitle}</h3>
+                </div>
+                <div class="panel-body">
+                    {block name="main"}
+                    <div class="list-group" >
+                        <ul class="list-group">
+                            {volist name='blogCollectList' id='blog'}
+                            <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item" target="_blank">
+                                <span>{$blog.title}</span>
+                                <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                            </a>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <div class="text-center">{$blogCollectList|raw}</div>
+                    {/block}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="row text-center" >
+                    <img src="{$authImg}" style="width: 260px;">
+                </div>
+                <HR>
+                <div class="row text-center">
+                    <span style="font-weight: bold;font-size: 18px">{$nickname}</span>
+                </div>
+                <HR>
+                <div class="row" style="font-weight: 500">
+                    <div class="col-md-3 text-center">文章</div>
+                    <div class="col-md-3 text-center">粉丝</div>
+                    <div class="col-md-3 text-center">喜欢</div>
+                    <div class="col-md-3 text-center">收藏</div>
+                </div>
+                <div class="row" style="font-weight: 800">
+                    <div class="col-md-3 text-center">{$blogCount}</div>
+                    <div class="col-md-3 text-center">{$fans}</div>
+                    <div class="col-md-3 text-center">{$stars}</div>
+                    <div class="col-md-3 text-center">{$collection}</div>
+                </div>
+                <HR>
+                <div class="row text-center">
+                    <div class="col-md-4 col-md-offset-2" style="font-weight: 500">
+                        访问量: 0
+                    </div>
+                    <div class="col-md-4" style="font-weight: 500">
+                        排名：100
+                    </div>
+                </div>
+                <HR>
+                <div class="row text-center ">
+                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-plus"></span> 关注</a>
+                </div>
+                <div class="row text-center" style="padding-top: 2%">
+                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-envelope"></span> 私信</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ttop"><button class="btn btn-default btn-lg " style="background: #ffbde6"><span class=" glyphicon glyphicon-chevron-up "></span></button> </div>
 <script>
     if($('#userId').attr('value') == 0){
         $('#user1').hide();

@@ -140,12 +140,21 @@ class User extends Base
         }
         return msg('success',200,'保存成功');
     }
-    public function userCentre(BlogModel $blogModel){
+
+    /**
+     * 用户收藏过得文章
+     * @param BlogModel $blogModel
+     * @return mixed
+     * @auther 杜韦凡 <875147715@qq.com>
+     * @time:Times
+     */
+    public function myCollect(BlogModel $blogModel){
         $uid = session('user_auth.uid');
         $blogCollectList = $blogModel->blogCollectFind($uid);
         $userData = UserModel::get($uid);
         $this->assign([
             'Title'=> session('user_auth.nickname').'|个人中心',
+            'userTitle'=>$userData['NickName'].' 的收藏夹',
             'blogCollectList'=>$blogCollectList,
             'authImg'=>'/uploads/'.$userData['UserImg'],
             'nickname'=>$userData['NickName'],
@@ -154,7 +163,56 @@ class User extends Base
             'fans'=>$userData['Fans'],
             'collection'=>$userData['collection'],
         ]);
-        return $this->fetch('userCentre');
+        return $this->fetch('myCollect');
     }
-
+    public function myStar(BlogModel $blogModel){
+        $uid = session('user_auth.uid');
+        $blogStarList = $blogModel->blogStarFind($uid);
+        $userData = UserModel::get($uid);
+        $this->assign([
+            'Title'=> session('user_auth.nickname').'|个人中心',
+            'userTitle'=>$userData['NickName'].' 赞过的内容',
+            'blogStarList'=>$blogStarList,
+            'authImg'=>'/uploads/'.$userData['UserImg'],
+            'nickname'=>$userData['NickName'],
+            'blogCount'=>$userData['BlogCount'],
+            'stars'=>$userData['stars'],
+            'fans'=>$userData['Fans'],
+            'collection'=>$userData['collection'],
+        ]);
+        return $this->fetch('myStarBlog');
+    }
+    public function myBlog(BlogModel $blogModel){
+        $uid = session('user_auth.uid');
+        $userBlog = $blogModel->blogAllFind($uid);
+        $this->assign([
+            'Title' => '我的博客',
+            'userTitle'=>$userBlog['NickName'].' 的文章',
+            'blogList' =>$userBlog['blogList'],
+            'authImg'=>'/uploads/'.$userBlog['UserImg'],
+            'nickname'=>$userBlog['NickName'],
+            'blogCount'=>$userBlog['BlogCount'],
+            'stars'=>$userBlog['stars'],
+            'fans'=>$userBlog['Fans'],
+            'collection'=>$userBlog['collection'],
+        ]);
+        return $this->fetch('myBlog');
+    }
+    public function myTweet(UserModel $userModel){
+        $uid = session('user_auth.uid');
+        $userTweet = $userModel->userTweet($uid);
+        $userData = UserModel::get($uid);
+        $this->assign([
+            'Title' => '我的博客',
+            'userTitle'=>$userData['NickName'].' 的动态',
+            'authImg'=>'/uploads/'.$userData['UserImg'],
+            'nickname'=>$userData['NickName'],
+            'blogCount'=>$userData['BlogCount'],
+            'stars'=>$userData['stars'],
+            'fans'=>$userData['Fans'],
+            'collection'=>$userData['collection'],
+            'tweetList'=>$userTweet,
+        ]);
+        return $this->fetch('myTweet');
+    }
 }

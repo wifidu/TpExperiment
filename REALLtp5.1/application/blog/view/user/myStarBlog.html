@@ -1,0 +1,14 @@
+{extend name="user:myCollect"}
+{block name="main"}
+<div class="list-group" >
+    <ul class="list-group">
+                {volist name='blogStarList' id='blog'}
+                <a href="{:url('blog/index/blogRead',['blogId'=>$blog.id])}" class="list-group-item" target="_blank">
+                    <span>{$blog.title}</span>
+                    <!--                                    <span class="glyphicon glyphicon-heart" style=" "></span>-->
+                </a>
+                {/volist}
+    </ul>
+</div>
+            <div class="text-center">{$blogStarList|raw}</div>
+{/block}

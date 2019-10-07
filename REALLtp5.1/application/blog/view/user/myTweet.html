@@ -1,0 +1,70 @@
+{extend name="user:myCollect"}
+{block name="main"}
+
+        {volist name='tweetList' id='tweet'}
+            {switch tweet.tweetTitle}
+                {case blog}
+                <div style=" padding-top: 3%">
+                    <div class="row " >
+                        <div class="col-md-1" >
+                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                        </div>
+                        <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
+                            {$Think.session.user_auth.nickname."  "}写了一篇文章
+                        </div>
+                        <div class="col-md-4 " style="left: 30%;font-weight: 500;margin-top: 17px;">
+                            {$tweet.create_time|date='Y-m-d H:i:s'}
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 2%;padding-bottom: 3%">
+                        <a href="{:url('blog/index/blogRead',['blogId'=>$tweet.id])}" class="list-group-item" target="_blank">
+                            <span >{$tweet.title}</span>
+                        </a>
+                    </div>
+                </div>
+                {/case}
+                {case star}
+                <div style="padding-top: 3%">
+                    <div class="row" >
+                        <div class="col-md-1" >
+                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                        </div>
+                        <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
+                            <span style="font-weight: bold">{$Think.session.user_auth.nickname."  "}赞了文章</span>
+                        </div>
+                        <div class="col-md-4 " style="left: 30%;font-weight: 500;margin-top: 17px;">
+                            <span style="font-weight: 500">{$tweet.create_time|date='Y-m-d H:i:s'}</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 2%;padding-bottom: 3%">
+                        <a href="{:url('blog/index/blogRead',['blogId'=>$tweet.bid])}" class="list-group-item" target="_blank">
+                            <span>{$tweet.title}</span>
+                        </a>
+                    </div>
+                </div>
+                {/case}
+                {case collect}
+                <div style="padding-top: 3%">
+                    <div class="row" >
+                        <div class="col-md-1" >
+                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                        </div>
+                        <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
+                            <span style="font-weight: bold">{$Think.session.user_auth.nickname."  "}收藏了文章</span>
+                        </div>
+                        <div class="col-md-4 " style="left: 30%;font-weight: 500;margin-top: 17px;">
+                            <span style="font-weight: 500">{$tweet.create_time|date='Y-m-d H:i:s'}</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 2%;padding-bottom: 3%">
+                        <a href="{:url('blog/index/blogRead',['blogId'=>$tweet.bid])}" class="list-group-item" target="_blank">
+                            <span>{$tweet.title}</span>
+                        </a>
+                    </div>
+                </div>
+                {/case}
+                {default/}
+            {/switch}
+        {/volist}
+
+{/block}

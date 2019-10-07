@@ -4,6 +4,7 @@
 namespace app\blog\model;
 
 use app\common\Md5;
+use think\Db;
 use think\facade\Env;
 use think\Model;
 use think\facade\Session;
@@ -135,5 +136,28 @@ class User extends Model {
             }
             return msg('success',200,'修改成功');
         }
+    }
+
+    public function userTweet($uid){
+        $userCollect = Db::name('UserCollection')->where('uid',$uid)->select();
+        for ($i = 0 ;$i < count($userCollect);$i++){
+            $blogData = Db::name('Blog')->where('id',$userCollect[$i]['bid'])->column('title');
+            $userCollect[$i]['title'] = $blogData[0];
+            $userCollect[$i]['tweetTitle']='collect';
+        }
+        $userStar = Db::name('UserStar')->where('uid',$uid)->select();
+        for ($i = 0 ;$i < count($userStar);$i++){
+            $blogData = Db::name('Blog')->where('id',$userStar[$i]['bid'])->column('title');
+            $userStar[$i]['title'] = $blogData[0];
+            $userStar[$i]['tweetTitle']='star';
+        }
+        $userBlog = Db::name('Blog')->where('user_id',$uid)->field('id,title,create_time')->select();
+        for ($i = 0 ;$i < count($userBlog);$i++){
+            $userBlog[$i]['tweetTitle']='blog';
+        }
+        $tweet = array_merge_recursive($userCollect,$userStar,$userBlog);
+        $time = array_column($tweet,'create_time');
+        array_multisort($time,SORT_DESC,$tweet);
+        return $tweet;
     }
 }
