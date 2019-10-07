@@ -106,7 +106,7 @@
                             {$Think.session.user_auth.nickname|default="游客"}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="user">
-                            <li><a href="{:url('blog/user/myTweet')}"><span class="glyphicon glyphicon-user"> </span>个人中心</a></li>
+                            <li><a href="{:url('blog/user/myTweet',['uid'=>$Think.session.user_auth.uid])}"><span class="glyphicon glyphicon-user"> </span>个人中心</a></li>
                             <li><a href="{:url('blog/user/userData')}"><span class="glyphicon glyphicon-cog"></span>编辑资料</a></li>
                             <li><a href="{:url('blog/blog/blog')}"><span class="glyphicon glyphicon-plus"></span>新建博客</a></li>
                             <li role="separator" class="divider"></li>
@@ -140,11 +140,26 @@
     <div class="row">
         <div class="col-md-2">
             <div class="list-group text-center ">
-                <a id="myTwees" type="button" class="list-group-item" href="{:url('blog/user/myTweet')}"><span class="glyphicon glyphicon-list-alt"></span> 我的动态</a>
-                <a id="myBlog" type="button" class="list-group-item" href="{:url('blog/user/myBlog')}"><span class="glyphicon glyphicon-calendar"></span>我的文章</a>
-                <a id="myStar" type="button" class="list-group-item" href="{:url('blog/user/myStar')}"><span class="glyphicon glyphicon-heart"></span>我的点赞</a>
-                <a id="myCollect" type="button" class="list-group-item" href="{:url('blog/user/myCollect')}"><span class="glyphicon glyphicon-star"></span>我的收藏</a>
-                <a id="myReply" type="button" class="list-group-item" href="{:url('blog/user/myReply')}"><span class="glyphicon glyphicon-comment"></span>我的回复</a>
+                <a id="myTwees" type="button" class="list-group-item" href="{:url('blog/user/myTweet',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    {$isSelf}的动态
+                </a>
+                <a id="myBlog" type="button" class="list-group-item" href="{:url('blog/user/myBlog',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    {$isSelf}的文章
+                </a>
+                <a id="myStar" type="button" class="list-group-item" href="{:url('blog/user/myStar',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-heart"></span>
+                    {$isSelf}的点赞
+                </a>
+                <a id="myCollect" type="button" class="list-group-item" href="{:url('blog/user/myCollect',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-star"></span>
+                    {$isSelf}的收藏
+                </a>
+                <a id="myReply" type="button" class="list-group-item" href="{:url('blog/user/myReply')}">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    {$isSelf}的回复
+                </a>
             </div>
         </div>
         <div class="col-md-7">
@@ -192,26 +207,36 @@
                     <div class="col-md-3 text-center">{$collection}</div>
                 </div>
                 <HR>
-                <div class="row text-center">
-                    <div class="col-md-4 col-md-offset-2" style="font-weight: 500">
-                        访问量: 0
+                    {if ( $authId == $Think.session.user_auth.uid) }
+                    <div class="row text-center " style="padding-bottom: 7%">
+                        <a href="{:url('blog/user/userData')}" type="button" class="btn btn-default "  style="width: 200px">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            编辑个人资料
+                        </a>
                     </div>
-                    <div class="col-md-4" style="font-weight: 500">
-                        排名：100
+                    {else /}
+                    <div class="row text-center ">
+                        <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-plus"></span> 关注</a>
                     </div>
-                </div>
-                <HR>
-                <div class="row text-center ">
-                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-plus"></span> 关注</a>
-                </div>
-                <div class="row text-center" style="padding-top: 2%">
-                    <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-envelope"></span> 私信</a>
-                </div>
+                    <div class="row text-center" style="padding-top: 2%">
+                        <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-envelope"></span> 私信</a>
+                    </div>
+                    {/if}
             </div>
         </div>
     </div>
 </div>
+<div style=" padding-left: 2%;padding-right: 2% ;position: relative" >
+    <div class="row text-center">
 
+        免费？不存在的！别人总要从你那里拿走点什么，或者是名声或者是金钱。 ——原创<br>
+
+        关于作者  ·   关于  ·   归档  ·   友情链接  ·<br>
+
+        本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议，已建立896天<br>
+        ©2017 基于Hexo搭建 ，主题 JSimple ，Hosted by Github Pages，Hosted by Coding Pages<br>
+    </div>
+</div>
 <div id="ttop"><button class="btn btn-default btn-lg " style="background: #ffbde6"><span class=" glyphicon glyphicon-chevron-up "></span></button> </div>
 <script>
     if($('#userId').attr('value') == 0){

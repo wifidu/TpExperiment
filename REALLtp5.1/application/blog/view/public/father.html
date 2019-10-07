@@ -106,7 +106,7 @@
                             {$Think.session.user_auth.nickname|default="游客"}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="user">
-                            <li><a href="{:url('blog/user/myTweet')}"><span class="glyphicon glyphicon-user"> </span>个人中心</a></li>
+                            <li><a href="{:url('blog/user/myTweet',['uid'=>$Think.session.user_auth.uid])}"><span class="glyphicon glyphicon-user"> </span>个人中心</a></li>
                             <li><a href="{:url('blog/user/userData')}"><span class="glyphicon glyphicon-cog"></span>编辑资料</a></li>
                             <li><a href="{:url('blog/blog/blog')}"><span class="glyphicon glyphicon-plus"></span>新建博客</a></li>
                             <li role="separator" class="divider"></li>
@@ -137,7 +137,19 @@
 {block name="left"}左边分栏{/block}
 {block name="main"}主内容{/block}
 {block name="footer"}底部{/block}
+
+<div style=" padding-left: 2%;padding-right: 2% ;bottom: 0;width: 100%; overflow:visible;position: relative" >
+    <div class="row text-center">
+        <p>
+            免费？不存在的！别人总要从你那里拿走点什么，或者是名声或者是金钱。 ——原创<br>
+
+            关于作者  875147715@qq.com
+        </p>
+    </div>
+</div>
 <div id="ttop"><button class="btn btn-default btn-lg " style="background: #ffbde6"><span class=" glyphicon glyphicon-chevron-up "></span></button> </div>
+
+
 
 <script>
     if($('#userId').attr('value') == 0){

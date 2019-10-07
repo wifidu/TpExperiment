@@ -14,7 +14,7 @@
     }
 </style>
 
-<div class="container" style="padding-top:2%">
+<div class="container" style="padding-top:2%;">
     <div class="row">
         <div class="col-md-3">
                 <div class="panel panel-default" >
@@ -67,8 +67,10 @@
                 <div class="panel-body">
                     <div id = "content2">
                     </div>
-                    <div id = "content1"  hidden="hidden">
-                        {$content}
+                    <div id = "content1" >
+                        <?php
+                        echo htmlspecialchars_decode($content);
+                        ?>
                     </div>
                 </div>
             </div>
@@ -77,7 +79,7 @@
         <input type="hidden" value="{$Think.session.user_auth.uid}" id="uid">
         <input type="hidden" value="{$authId}" id="authId">
     </div>
-    s
+
     <div style="position: sticky; bottom: 46%; margin-left: 104%; psition: -webkit-sticky;">
     <div style="position: sticky; bottom: 46%; margin-left: 104%;">
         <div class="btn-group-vertical tooltip-options">
@@ -91,6 +93,7 @@
                 <span class="glyphicon glyphicon-comment"></span>
             </button>
         </div>
+    </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -255,10 +258,11 @@
        })
     });
     //显示博客文本
-    $(function() {
-        $("#content2").html($("#content1").text());
-    });
+    // $(function() {
+    //     $("#content2").html($("#content1").text());
+    // });
     // 初始化bootstrap插件
+    //用JS是后端加载完之后前段显示时在进行渲染，这样用户看起来总是不顺畅的感觉
     // $(function () {
     //     $('[data-toggle="tooltip"]').tooltip();
     //     // $('#example').tooltip(options)

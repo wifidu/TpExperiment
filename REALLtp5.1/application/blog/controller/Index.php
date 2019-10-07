@@ -70,7 +70,7 @@ class Index extends Base
             'fans'=>$authBlog['Fans'],
             'blogCount'=>$authBlog['BlogCount'],
             'stars'=>$authBlog['stars'],
-            'authId'=>$authBlog['Uid'],
+            'authId'=>$authId,
             'collection'=>$authBlog['collection'],
             'blogList'=>$authBlog['blogList'],
         ]);

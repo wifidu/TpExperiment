@@ -7,7 +7,7 @@
                 <div style=" padding-top: 3%">
                     <div class="row " >
                         <div class="col-md-1" >
-                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                            <img src="{$authImg}" width="40">
                         </div>
                         <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
                             {$Think.session.user_auth.nickname."  "}写了一篇文章
@@ -27,7 +27,7 @@
                 <div style="padding-top: 3%">
                     <div class="row" >
                         <div class="col-md-1" >
-                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                            <img src="{$authImg}" width="40">
                         </div>
                         <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
                             <span style="font-weight: bold">{$Think.session.user_auth.nickname."  "}赞了文章</span>
@@ -46,8 +46,8 @@
                 {case collect}
                 <div style="padding-top: 3%">
                     <div class="row" >
-                        <div class="col-md-1" >
-                            <img src="{$Think.session.user_auth.userImg}" width="40">
+                        <div class="col-md-1">
+                            <img src="{$authImg}" width="40">
                         </div>
                         <div class="col-md-4" style="font-weight: bold;margin-top: 17px;">
                             <span style="font-weight: bold">{$Think.session.user_auth.nickname."  "}收藏了文章</span>

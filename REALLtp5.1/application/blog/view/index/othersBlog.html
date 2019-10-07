@@ -5,11 +5,16 @@
     <div class="row">
         <div class="col-md-2">
             <div class="list-group text-center ">
-                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span> Ta的文章</a>
-                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-comment"></span>Ta的回复</a>
-                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-calendar"></span>Ta的动态</a>
-                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-heart"></span>Ta的点赞</a>
-                <a type="button" class="list-group-item"><span class="glyphicon glyphicon-star"></span>Ta的收藏</a>
+                <a id="myTwees" type="button" class="list-group-item" href="{:url('blog/user/myTweet',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-list-alt"></span> Ta的动态</a>
+                <a id="myBlog" type="button" class="list-group-item" href="{:url('blog/index/othersBlog',['authId'=>$authId])}">
+                    <span class="glyphicon glyphicon-calendar"></span>Ta的文章</a>
+                <a id="myStar" type="button" class="list-group-item" href="{:url('blog/user/myStar',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-heart"></span>Ta的点赞</a>
+                <a id="myCollect" type="button" class="list-group-item" href="{:url('blog/user/myCollect',['uid'=>$authId])}">
+                    <span class="glyphicon glyphicon-star"></span>Ta的收藏</a>
+                <a id="myReply" type="button" class="list-group-item" href="{:url('blog/user/myReply')}">
+                    <span class="glyphicon glyphicon-comment"></span>Ta的回复</a>
             </div>
         </div>
         <div class="col-md-7">
@@ -54,22 +59,23 @@
                     <div class="col-md-3 text-center">{$stars}</div>
                     <div class="col-md-3 text-center">{$collection}</div>
                 </div>
+
                 <HR>
-                <div class="row text-center">
-                    <div class="col-md-4 col-md-offset-2" style="font-weight: 500">
-                        访问量: 0
-                    </div>
-                    <div class="col-md-4" style="font-weight: 500">
-                        排名：100
-                    </div>
+                {if ( $authId == $Think.session.user_auth.uid) }
+                <div class="row text-center " style="padding-bottom: 7%">
+                    <a href="{:url('blog/user/userData')}" type="button" class="btn btn-default "  style="width: 200px">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        编辑个人资料
+                    </a>
                 </div>
-                <HR>
+                {else /}
                 <div class="row text-center ">
                     <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-plus"></span> 关注</a>
                 </div>
                 <div class="row text-center" style="padding-top: 2%">
                     <a type="button" class="btn btn-default "  style="width: 200px"><span class="glyphicon glyphicon-envelope"></span> 私信</a>
                 </div>
+                {/if}
             </div>
         </div>
     </div>

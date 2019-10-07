@@ -142,17 +142,18 @@ class User extends Base
     }
 
     /**
-     * 用户收藏过得文章
+     * @param null $uid
      * @param BlogModel $blogModel
      * @return mixed
      * @auther 杜韦凡 <875147715@qq.com>
      * @time:Times
      */
-    public function myCollect(BlogModel $blogModel){
-        $uid = session('user_auth.uid');
+    public function myCollect($uid ,BlogModel $blogModel){
         $blogCollectList = $blogModel->blogCollectFind($uid);
         $userData = UserModel::get($uid);
+        $isSelf = ($uid == session('auth_user.uid')) ? '我' : 'Ta';
         $this->assign([
+            'isSelf'=>$isSelf,
             'Title'=> session('user_auth.nickname').'|个人中心',
             'userTitle'=>$userData['NickName'].' 的收藏夹',
             'blogCollectList'=>$blogCollectList,
@@ -161,15 +162,17 @@ class User extends Base
             'blogCount'=>$userData['BlogCount'],
             'stars'=>$userData['stars'],
             'fans'=>$userData['Fans'],
+            'authId'=>$uid,
             'collection'=>$userData['collection'],
         ]);
         return $this->fetch('myCollect');
     }
-    public function myStar(BlogModel $blogModel){
-        $uid = session('user_auth.uid');
+    public function myStar($uid,BlogModel $blogModel){
         $blogStarList = $blogModel->blogStarFind($uid);
         $userData = UserModel::get($uid);
+        $isSelf = $uid == session('auth_user.uid') ? '我' : 'Ta';
         $this->assign([
+            'isSelf'=>$isSelf,
             'Title'=> session('user_auth.nickname').'|个人中心',
             'userTitle'=>$userData['NickName'].' 赞过的内容',
             'blogStarList'=>$blogStarList,
@@ -178,14 +181,16 @@ class User extends Base
             'blogCount'=>$userData['BlogCount'],
             'stars'=>$userData['stars'],
             'fans'=>$userData['Fans'],
+            'authId'=>$uid,
             'collection'=>$userData['collection'],
         ]);
         return $this->fetch('myStarBlog');
     }
-    public function myBlog(BlogModel $blogModel){
-        $uid = session('user_auth.uid');
+    public function myBlog($uid,BlogModel $blogModel){
         $userBlog = $blogModel->blogAllFind($uid);
+        $isSelf = $uid == session('auth_user.uid') ? '我' : 'Ta';
         $this->assign([
+            'isSelf'=>$isSelf,
             'Title' => '我的博客',
             'userTitle'=>$userBlog['NickName'].' 的文章',
             'blogList' =>$userBlog['blogList'],
@@ -194,22 +199,25 @@ class User extends Base
             'blogCount'=>$userBlog['BlogCount'],
             'stars'=>$userBlog['stars'],
             'fans'=>$userBlog['Fans'],
+            'authId'=>$uid,
             'collection'=>$userBlog['collection'],
         ]);
         return $this->fetch('myBlog');
     }
-    public function myTweet(UserModel $userModel){
-        $uid = session('user_auth.uid');
+    public function myTweet($uid,UserModel $userModel){
         $userTweet = $userModel->userTweet($uid);
         $userData = UserModel::get($uid);
+        $isSelf = $uid == session('user_auth.uid') ? '我' : 'Ta';
         $this->assign([
-            'Title' => '我的博客',
+            'isSelf'=>$isSelf,
+            'Title' => '我的动态',
             'userTitle'=>$userData['NickName'].' 的动态',
             'authImg'=>'/uploads/'.$userData['UserImg'],
             'nickname'=>$userData['NickName'],
             'blogCount'=>$userData['BlogCount'],
             'stars'=>$userData['stars'],
             'fans'=>$userData['Fans'],
+            'authId'=>$uid,
             'collection'=>$userData['collection'],
             'tweetList'=>$userTweet,
         ]);
