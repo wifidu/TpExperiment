@@ -6,6 +6,7 @@ namespace app\blog\model;
 use app\blog\model\User;
 use app\common;
 use think\Db;
+use think\Exception;
 use think\Model;
 
 class Blog extends Model {
@@ -98,7 +99,13 @@ class Blog extends Model {
         return $userData;
     }
     public function blogCollectFind($uid){
-        $bids = Db::table('think_user_collect')->where('uid',$uid)->column('bid');
+	    try{
+            $bids = Db::table('think_user_collection')->where('uid',$uid)->column('bid');
+            $blogCollectList = $this->whereIn('id',$bids,'or')->paginate(10);
+        }catch (Exception $e){
+	        return msg('error',500,$e->getMessage());
+        }
+		return $blogCollectList;
     }
 
 }

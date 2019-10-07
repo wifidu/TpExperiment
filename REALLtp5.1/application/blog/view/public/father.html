@@ -91,11 +91,11 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-left" method="get" action="{:url('blog/blog/blogSearch')}" >
-                    <div class="form-group"  >
-                        <input required id='search' name="search" type="text" style="width: 110px" class="form-control" placeholder="Search">
+                <form  id='search' class="navbar-form navbar-left" method="get" action="{:url('blog/blog/blogSearch')}" >
+                    <div  class="form-group"  >
+                        <input required id='search1' name="search" type="text" style="width: 110px" class="form-control" placeholder="Search">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button id='search0' type="submit" class="btn btn-default">Submit</button>
                 </form>
                 {if $Think.session.user_auth}
                 <ul class="nav navbar-nav navbar-right">
@@ -160,12 +160,13 @@
         });
     });
     $(function () {
-        $('#search').hover(function () {
-            $('#search').animate({width:'250px'})
-        },function () {
-            $('#search').animate({width:'110px'})
+        $('#search1').focus(function () {
+            $('#search1').animate({width:'250px'})
         });
-    })
+        $('#search1').blur(function () {
+            $('#search1').animate({width:'110px'})
+        });
+    });
     // 当网页向下滑动 20px 出现"返回顶部" 按钮
     // window.onscroll = function() {scrollFunction()};
     //

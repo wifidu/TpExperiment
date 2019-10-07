@@ -143,9 +143,16 @@ class User extends Base
     public function userCentre(BlogModel $blogModel){
         $uid = session('user_auth.uid');
         $blogCollectList = $blogModel->blogCollectFind($uid);
+        $userData = UserModel::get($uid);
         $this->assign([
             'Title'=> session('user_auth.nickname').'|个人中心',
             'blogCollectList'=>$blogCollectList,
+            'authImg'=>'/uploads/'.$userData['UserImg'],
+            'nickname'=>$userData['NickName'],
+            'blogCount'=>$userData['BlogCount'],
+            'stars'=>$userData['stars'],
+            'fans'=>$userData['Fans'],
+            'collection'=>$userData['collection'],
         ]);
         return $this->fetch('userCentre');
     }
