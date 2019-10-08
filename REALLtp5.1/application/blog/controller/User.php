@@ -151,7 +151,7 @@ class User extends Base
     public function myCollect($uid ,BlogModel $blogModel){
         $blogCollectList = $blogModel->blogCollectFind($uid);
         $userData = UserModel::get($uid);
-        $isSelf = ($uid == session('auth_user.uid')) ? '我' : 'Ta';
+        $isSelf = ($uid == session('user_auth.uid')) ? '我' : 'Ta';
         $this->assign([
             'isSelf'=>$isSelf,
             'Title'=> session('user_auth.nickname').'|个人中心',
@@ -170,7 +170,7 @@ class User extends Base
     public function myStar($uid,BlogModel $blogModel){
         $blogStarList = $blogModel->blogStarFind($uid);
         $userData = UserModel::get($uid);
-        $isSelf = $uid == session('auth_user.uid') ? '我' : 'Ta';
+        $isSelf = $uid == session('user_auth.uid') ? '我' : 'Ta';
         $this->assign([
             'isSelf'=>$isSelf,
             'Title'=> session('user_auth.nickname').'|个人中心',
@@ -188,7 +188,7 @@ class User extends Base
     }
     public function myBlog($uid,BlogModel $blogModel){
         $userBlog = $blogModel->blogAllFind($uid);
-        $isSelf = $uid == session('auth_user.uid') ? '我' : 'Ta';
+        $isSelf = $uid == session('user_auth.uid') ? '我' : 'Ta';
         $this->assign([
             'isSelf'=>$isSelf,
             'Title' => '我的博客',
