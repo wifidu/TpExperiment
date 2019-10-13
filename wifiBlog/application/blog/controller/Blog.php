@@ -15,7 +15,8 @@ class Blog extends Base{
      * @auther 杜韦凡 <875147715@qq.com>
      * @time:2019/9/22 下午7:03
      */
-    public function index(){
+    public function index()
+    {
         $this->noLogin();
         $this->assign([
             'Title' => '新建笔记',
